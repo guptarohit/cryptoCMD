@@ -116,6 +116,9 @@ class CmcScraper(object):
         :return:
         """
 
+        if not (self.headers and self.rows):
+            self._download_data()
+
         if csv_path is None:
             """ Export in current directory if path not specified"""
             csv_path = os.getcwd()
@@ -126,9 +129,6 @@ class CmcScraper(object):
 
         if not csv_name.endswith('.csv'):
             csv_name += '.csv'
-
-        if not (self.headers and self.rows):
-            self._download_data()
 
         _csv = '{0}/{1}'.format(csv_path, csv_name)
 
