@@ -1,14 +1,23 @@
 cryptoCMD: cryptoCurrency Market Data
 ======================================
 
+.. image:: https://img.shields.io/pypi/v/cryptoCMD.svg
+    :target: https://pypi.python.org/pypi/cryptoCMD
+
+.. image:: https://img.shields.io/pypi/l/cryptoCMD.svg
+    :target: https://pypi.python.org/pypi/cryptoCMD
+
+.. image:: https://img.shields.io/pypi/wheel/cryptoCMD.svg
+    :target: https://pypi.python.org/pypi/cryptoCMD
+
+.. image:: https://img.shields.io/pypi/pyversions/cryptoCMD.svg
+    :target: https://pypi.python.org/pypi/cryptoCMD
+
+.. image:: http://hits.dwyl.io/guptarohit/cryptoCMD.svg
+    :target: http://hits.dwyl.io/guptarohit/cryptoCMD
+
+
 Cryptocurrency historical market price data scrapper written in Python 3.
-
-Installation
-------------
-
-::
-
-    $ pip install cryptocmd
 
 Usage
 ------
@@ -33,6 +42,15 @@ Following methods available to get data in multiple formats from https://coinmar
 
     # get dataframe for the data
     df = scraper.get_dataframe()
+
+
+Installation
+------------
+
+::
+
+    $ pip install cryptocmd
+
 
 Contributing
 ------------
