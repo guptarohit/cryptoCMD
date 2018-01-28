@@ -1,0 +1,5 @@
+include README.rst
+include LICENSE
+include requirements.txt
+
+global-exclude *.py[cdo] __pycache__ *.so *.pyd
