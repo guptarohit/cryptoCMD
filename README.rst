@@ -1,6 +1,9 @@
 cryptoCMD: cryptoCurrency Market Data
 ======================================
 
+.. image:: https://img.shields.io/badge/Made%20with-Python-1f425f.svg
+    :target: https://www.python.org/
+
 .. image:: https://img.shields.io/pypi/v/cryptoCMD.svg
     :target: https://pypi.python.org/pypi/cryptoCMD
 
@@ -17,7 +20,7 @@ cryptoCMD: cryptoCurrency Market Data
     :target: http://hits.dwyl.io/guptarohit/cryptoCMD
 
 
-Cryptocurrency historical market price data scrapper written in Python 3.
+Cryptocurrency historical market price data scraper written in Python.
 
 Usage
 ------
