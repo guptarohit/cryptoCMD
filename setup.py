@@ -12,7 +12,7 @@ with open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = '\n' + f.read()
 
 NAME = 'cryptocmd'
-VERSION = '0.1.2'
+VERSION = '0.1.3'
 
 with open('requirements.txt') as f:
     required = f.readlines()
@@ -29,7 +29,7 @@ setup(
     packages=[NAME],
     url='https://github.com/guptarohit/cryptocmd',
     author='Rohit Gupta',
-    author_email='rohitg.tech@gmail.com',
+    author_email='',
     install_requires=required,
     include_package_data=True,
     extras_require={
