@@ -1,3 +1,5 @@
+.. -*-restructuredtext-*-
+
 cryptoCMD: cryptoCurrency Market Data
 ======================================
 
@@ -19,8 +21,8 @@ cryptoCMD: cryptoCurrency Market Data
 .. image:: http://hits.dwyl.io/guptarohit/cryptoCMD.svg
     :target: http://hits.dwyl.io/guptarohit/cryptoCMD
 
-
 Cryptocurrency historical market price data scraper written in Python.
+
 
 Usage
 ------
@@ -28,7 +30,29 @@ Usage
 CoinMarketCap Scraper
 =====================
 
-Following methods available to get data in multiple formats from https://coinmarketcap.com
+Following methods are available to get data in multiple formats from https://coinmarketcap.com
+
+To get all time historical data of a cryptocurrency
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    from cryptocmd import CmcScraper
+
+    # initialise scraper without passing time interval
+    scraper = CmcScraper('XRP')
+
+    # data as list of list in a variable
+    headers, data = scraper.get_data()
+
+    # export the data to csv, can also paas option name parameter
+    scraper.export_csv('xrp_all_time.csv')
+
+    # Pandas dataFrame for the same data
+    df = scraper.get_dataframe()
+
+To get data of a cryptocurrency for some days
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
@@ -45,6 +69,11 @@ Following methods available to get data in multiple formats from https://coinmar
 
     # get dataframe for the data
     df = scraper.get_dataframe()
+
+
+Following are the columns of the data
+"""""""""""""""""""""""""""""""""""""
+``Date, Open, High, Low, Close, Volume, Market Cap``
 
 
 Installation
