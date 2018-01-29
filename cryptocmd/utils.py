@@ -119,6 +119,18 @@ def _native_type(s):
             return s
 
 
+def _replace(s, bad_chars):
+    if sys.version_info > (3, 0):
+        # For Python 3
+        without_bad_chars = str.maketrans("", "", bad_chars)
+        return s.translate(without_bad_chars)
+    else:
+        # For Python 2
+        import string
+        identity = string.maketrans("", "")
+        return s.translate(identity, bad_chars)
+
+
 def extract_data(html):
     """
     Extract the price history from the HTML.
@@ -141,7 +153,7 @@ def extract_data(html):
         td_tags = row.find_all('td')
         if td_tags:
             rows.append([
-                _native_type(td.get_text(strip=True).replace(',', '')) for td in td_tags
+                _native_type(_replace(td.get_text(strip=True), ',-*?')) for td in td_tags
             ])
 
     return headers, rows
