@@ -12,7 +12,7 @@ with open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = '\n' + f.read()
 
 NAME = 'cryptocmd'
-VERSION = '0.1.3'
+VERSION = '0.2.0'
 
 with open('requirements.txt') as f:
     required = f.readlines()
