@@ -45,7 +45,7 @@ To get all time historical data of a cryptocurrency
     # data as list of list in a variable
     headers, data = scraper.get_data()
 
-    # export the data to csv, can also paas option name parameter
+    # export the data as csv file, you can also pass optional name parameter
     scraper.export_csv('xrp_all_time.csv')
 
     # Pandas dataFrame for the same data
