@@ -12,16 +12,27 @@ cryptoCMD: cryptoCurrency Market Data
 .. image:: https://img.shields.io/pypi/l/cryptoCMD.svg
     :target: https://github.com/guptarohit/cryptoCMD/blob/master/LICENSE
 
-.. image:: https://img.shields.io/pypi/wheel/cryptoCMD.svg
-    :target: https://pypi.python.org/pypi/cryptoCMD
-
 .. image:: https://img.shields.io/pypi/pyversions/cryptoCMD.svg
     :target: https://pypi.python.org/pypi/cryptoCMD
 
-.. image:: http://hits.dwyl.io/guptarohit/cryptoCMD.svg
-    :target: http://hits.dwyl.io/guptarohit/cryptoCMD
+.. image:: https://img.shields.io/pypi/wheel/cryptoCMD.svg
+    :target: https://pypi.python.org/pypi/cryptoCMD
 
 Cryptocurrency historical market price data scraper written in Python.
+
+
+Installation
+------------
+
+::
+
+    $ pip install cryptocmd
+
+to install from the latest source use following command
+
+::
+
+    $ pip install -U git+git://github.com/guptarohit/cryptoCMD.git
 
 
 Usage
@@ -74,20 +85,6 @@ To get data of a cryptocurrency for some days
 Following are the columns of the data
 """""""""""""""""""""""""""""""""""""
 ``Date, Open, High, Low, Close, Volume, Market Cap``
-
-
-Installation
-------------
-
-::
-
-    $ pip install cryptocmd
-
-to install from the latest source use following command
-
-::
-
-    $ pip install -U git+git://github.com/guptarohit/cryptoCMD.git
 
 
 Contributing
