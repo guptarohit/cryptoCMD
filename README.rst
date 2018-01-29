@@ -8,7 +8,7 @@ cryptoCMD: cryptoCurrency Market Data
     :target: https://pypi.python.org/pypi/cryptoCMD
 
 .. image:: https://img.shields.io/pypi/l/cryptoCMD.svg
-    :target: https://pypi.python.org/pypi/cryptoCMD
+    :target: https://github.com/guptarohit/cryptoCMD/blob/master/LICENSE
 
 .. image:: https://img.shields.io/pypi/wheel/cryptoCMD.svg
     :target: https://pypi.python.org/pypi/cryptoCMD
@@ -53,6 +53,12 @@ Installation
 ::
 
     $ pip install cryptocmd
+
+to install from the latest source use following command
+
+::
+
+    $ pip install -U git+git://github.com/guptarohit/cryptoCMD.git
 
 
 Contributing
