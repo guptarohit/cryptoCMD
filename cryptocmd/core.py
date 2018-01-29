@@ -133,7 +133,7 @@ class CmcScraper(object):
         _csv = '{0}/{1}'.format(csv_path, csv_name)
 
         try:
-            with open(_csv, 'w') as csvfile:
+            with open(_csv, 'w', newline='') as csvfile:
                 writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
                 writer.writerow(self.headers)
                 for data in self.rows:
