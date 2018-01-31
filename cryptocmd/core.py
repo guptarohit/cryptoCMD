@@ -68,7 +68,7 @@ class CmcScraper(object):
         """
         This method fetches downloaded the data.
         :param verbose: Flag to enable verbose
-        :param forced: Flag to enable force re-download and clear cache
+        :param forced: Flag to enable force re-download data.
         :return:
         """
 
@@ -83,9 +83,10 @@ class CmcScraper(object):
         else:
             return self.headers, self.rows
 
-    def get_dataframe(self):
+    def get_dataframe(self, forced=False):
         """
         This gives scraped data as dataframe.
+        :param forced: Flag to enable force re-download data.
         :return: dataframe of the downloaded data
         """
 
@@ -99,7 +100,7 @@ class CmcScraper(object):
                 "DataFrame Format requires 'pandas' to be installed."
                 "Try : pip install pandas")
 
-        if not (self.headers and self.rows):
+        if not (self.headers and self.rows) or forced:
             self._download_data()
 
         dataframe = pd.DataFrame(data=self.rows, columns=self.headers)
@@ -108,15 +109,16 @@ class CmcScraper(object):
         dataframe['Date'] = pd.to_datetime(dataframe['Date'])
         return dataframe
 
-    def export_csv(self, csv_name=None, csv_path=None):
+    def export_csv(self, csv_name=None, csv_path=None, forced=False):
         """
         This exports scraped data into a csv.
         :param csv_name: name of csv file.
         :param csv_path: path to where export csv file.
+        :param forced: Flag to enable force re-download data.
         :return:
         """
 
-        if not (self.headers and self.rows):
+        if not (self.headers and self.rows) or forced:
             self._download_data()
 
         if csv_path is None:
