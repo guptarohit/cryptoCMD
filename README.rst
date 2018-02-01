@@ -87,7 +87,11 @@ Following are the columns of the data
 ``Date, Open, High, Low, Close, Volume, Market Cap``
 
 
+Acknowledgements
+----------------
+The data is being scrapped from `coinmarketcap <https://coinmarketcap.com>`_ :v: and it's `free <https://coinmarketcap.com/faq/>`_ to use. :tada:
+
 Contributing
 ------------
 
-Feel free to make a pull request!
+Feel free to make a pull request! :octocat:
