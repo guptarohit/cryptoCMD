@@ -40,7 +40,7 @@ class CmcScraper(object):
         if not (self.start_date and self.end_date):
             self.all_time = True
 
-        if not self.all_time and not (self.start_date and self.end_date):
+        if not (self.all_time or (self.start_date and self.end_date)):
             raise InvalidParameters("'start_date' or 'end_date' cannot be empty if 'all_time' flag is False")
             sys.exit(1)
 
@@ -50,11 +50,18 @@ class CmcScraper(object):
                                                                                            self.end_date,
                                                                                            self.all_time)
 
-    def _download_data(self):
+    def _download_data(self, **kwargs):
         """
         This method downloads the data.
+        :param forced: (optional) if ``True``, data will be re-downloaded.
         :return:
         """
+
+        forced = kwargs.get('forced')
+
+        if self.headers and self.rows and not forced:
+            return
+
         if self.all_time:
             self.start_date, self.end_date = get_begin_latest_dates(self.coin_code)
 
@@ -62,18 +69,16 @@ class CmcScraper(object):
 
         self.headers, self.rows = extract_data(table)
 
-        return
+    def get_data(self, verbose=False, **kwargs):
 
-    def get_data(self, verbose=False, forced=False):
         """
         This method fetches downloaded the data.
-        :param verbose: Flag to enable verbose
-        :param forced: Flag to enable force re-download data.
+        :param verbose: (optional) Flag to enable verbose.
+        :param kwargs: Optional arguments that data downloader takes.
         :return:
         """
 
-        if not (self.headers and self.rows) or forced:
-            self._download_data()
+        self._download_data(**kwargs)
 
         if verbose:
             print(*self.headers, sep=', ')
@@ -83,11 +88,11 @@ class CmcScraper(object):
         else:
             return self.headers, self.rows
 
-    def get_dataframe(self, forced=False):
+    def get_dataframe(self, **kwargs):
         """
-        This gives scraped data as dataframe.
-        :param forced: Flag to enable force re-download data.
-        :return: dataframe of the downloaded data
+        This gives scraped data as DataFrame.
+        :param kwargs: Optional arguments that data downloader takes.
+        :return: DataFrame of the downloaded data.
         """
 
         try:
@@ -100,8 +105,7 @@ class CmcScraper(object):
                 "DataFrame Format requires 'pandas' to be installed."
                 "Try : pip install pandas")
 
-        if not (self.headers and self.rows) or forced:
-            self._download_data()
+        self._download_data(**kwargs)
 
         dataframe = pd.DataFrame(data=self.rows, columns=self.headers)
 
@@ -109,17 +113,16 @@ class CmcScraper(object):
         dataframe['Date'] = pd.to_datetime(dataframe['Date'])
         return dataframe
 
-    def export_csv(self, csv_name=None, csv_path=None, forced=False):
+    def export_csv(self, csv_name=None, csv_path=None, **kwargs):
         """
         This exports scraped data into a csv.
-        :param csv_name: name of csv file.
-        :param csv_path: path to where export csv file.
-        :param forced: Flag to enable force re-download data.
+        :param csv_name: (optional) name of csv file.
+        :param csv_path: (optional) path to where export csv file.
+        :param kwargs: Optional arguments that data downloader takes.
         :return:
         """
 
-        if not (self.headers and self.rows) or forced:
-            self._download_data()
+        self._download_data(**kwargs)
 
         if csv_path is None:
             """ Export in current directory if path not specified"""
