@@ -44,7 +44,6 @@ class CmcScraper(object):
 
         if not (self.all_time or (self.start_date and self.end_date)):
             raise InvalidParameters("'start_date' or 'end_date' cannot be empty if 'all_time' flag is False")
-            sys.exit(1)
 
     def __repr__(self):
         return '<CmcScraper coin_code:{}, start_date:{}, end_date:{}, all_time:{}>'.format(self.coin_code,
@@ -140,7 +139,7 @@ class CmcScraper(object):
         _csv = '{0}/{1}'.format(csv_path, csv_name)
 
         try:
-            with open(_csv, 'w', newline='') as csvfile:
+            with open(_csv, 'w', newline='', encoding='utf-8') as csvfile:
                 writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
                 writer.writerow(self.headers)
                 for data in self.rows:

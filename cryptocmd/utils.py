@@ -22,9 +22,10 @@ def get_url_data(url):
         return response
     except Exception as e:
         if hasattr(e, 'message'):
-            print("Error message (get_url_data) :", e.message)
+            print('Error message (get_url_data) :', e.message)
         else:
-            print("Error message (get_url_data) :", e)
+            print('Error message (get_url_data) :', e)
+        sys.exit(1)
 
 
 def get_coin_id(coin_code):
@@ -44,7 +45,7 @@ def get_coin_id(coin_code):
         for coin in json_resp:
             if coin['symbol'] == coin_code:
                 return coin['id']
-        raise InvalidCoinCode("This coin code is unavailable on 'coinmarketcap.com'")
+        raise InvalidCoinCode('This coin code is unavailable on "coinmarketcap.com"')
     except Exception as e:
         raise e
 
@@ -99,10 +100,9 @@ def download_data(coin_code, start_date, end_date):
         print("Error fetching price data for {} for interval '{}' and '{}'", coin_code, start_date, end_date)
 
         if hasattr(e, 'message'):
-            print("Error message: " + e.message)
+            print('Error message (download_data) :', e.message)
         else:
-            print('here', e)
-            sys.exit(1)
+            print('Error message (download_data) :', e)
 
 
 def _native_type(s):
@@ -124,12 +124,12 @@ def _native_type(s):
 def _replace(s, bad_chars):
     if sys.version_info > (3, 0):
         # For Python 3
-        without_bad_chars = str.maketrans("", "", bad_chars)
+        without_bad_chars = str.maketrans('', '', bad_chars)
         return s.translate(without_bad_chars)
     else:
         # For Python 2
         import string
-        identity = string.maketrans("", "")
+        identity = string.maketrans('', '')
         return s.translate(identity, bad_chars)
 
 
@@ -143,7 +143,7 @@ def extract_data(html):
 
     soup = BeautifulSoup(html, 'html.parser')
 
-    table = soup.find("table", {"class": "table"})
+    table = soup.find('table', {'class': 'table'})
 
     th_tags = table.find_all('th')
     headers = [th.get_text(strip=True) for th in th_tags]
