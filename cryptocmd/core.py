@@ -6,6 +6,8 @@
 Cryptocurrency price History from coinmarketcap.com
 """
 
+from __future__ import print_function
+
 __all__ = ['CmcScraper']
 
 import os
