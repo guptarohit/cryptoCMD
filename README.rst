@@ -32,7 +32,7 @@ to install from the latest source use following command
 
 ::
 
-    $ pip install -U git+git://github.com/guptarohit/cryptoCMD.git
+    $ pip install git+git://github.com/guptarohit/cryptoCMD.git
 
 
 Usage
