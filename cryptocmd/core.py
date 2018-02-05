@@ -13,7 +13,7 @@ __all__ = ['CmcScraper']
 import os
 import sys
 import csv
-from .utils import get_begin_latest_dates, download_data, extract_data, InvalidParameters
+from .utils import download_coin_data, extract_data, InvalidParameters
 
 
 class CmcScraper(object):
@@ -64,11 +64,12 @@ class CmcScraper(object):
             return
 
         if self.all_time:
-            self.start_date, self.end_date = get_begin_latest_dates(self.coin_code)
+            self.start_date, self.end_date = None, None
 
-        table = download_data(self.coin_code, self.start_date, self.end_date)
+        table = download_coin_data(self.coin_code, self.start_date, self.end_date)
 
-        self.headers, self.rows = extract_data(table)
+        # self.headers, self.rows, self.start_date, self.end_date = extract_data(table)
+        self.end_date, self.start_date, self.headers, self.rows = extract_data(table)
 
     def get_data(self, verbose=False, **kwargs):
 

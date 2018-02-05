@@ -50,31 +50,7 @@ def get_coin_id(coin_code):
         raise e
 
 
-def get_begin_latest_dates(coin_code):
-    """
-    Fetches the date (begin_date) since when the data is available on coinmarketcap.com.
-    And date (latest_date) up to which data is available.
-    :param coin_code: coin code of a cryptocurrency e.g. btc
-    :return: 'begin_date', 'latest_date' for given 'coin_code'
-    """
-
-    coin_code = coin_code.upper()
-
-    coin_id = get_coin_id(coin_code)
-
-    url = 'https://coinmarketcap.com/currencies/{0}/historical-data/'.format(coin_id)
-    html = get_url_data(url).text
-
-    begin_date = re.search("All Time': \[\"(.*)\"", html).group(1)
-    begin_date = datetime.datetime.strptime(begin_date, '%m-%d-%Y')
-
-    yesterday = datetime.date.today() - datetime.timedelta(1)
-    latest_date = yesterday
-
-    return begin_date.strftime('%d-%m-%Y'), latest_date.strftime('%d-%m-%Y')
-
-
-def download_data(coin_code, start_date, end_date):
+def download_coin_data(coin_code, start_date, end_date):
     """
     Download HTML price history for the specified cryptocurrency and time range from CoinMarketCap.
 
@@ -83,6 +59,14 @@ def download_data(coin_code, start_date, end_date):
     :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
     :return: returns html of the webpage having historical data of cryptocurrency for certain duration
     """
+
+    if start_date is None:
+        # default start date on coinmarketcap.com
+        start_date = '28-4-2013'
+
+    if end_date is None:
+        yesterday = datetime.date.today() - datetime.timedelta(1)
+        end_date = yesterday.strftime('%d-%m-%Y')
 
     coin_id = get_coin_id(coin_code)
 
@@ -154,11 +138,17 @@ def extract_data(html):
     for row in raw_rows:
         td_tags = row.find_all('td')
         if td_tags:
-            rows.append([
-                _native_type(_replace(td.get_text(strip=True), ',-*?')) for td in td_tags
-            ])
+            # clean row data and change to appropriate data types
+            _row = [_native_type(_replace(td.get_text(strip=True), ',-*?')) for td in td_tags]
 
-    return headers, rows
+            # change format of date ('Aug 24 2017' to '24-08-2017')
+            _row[0] = datetime.datetime.strptime(_row[0], '%b %d %Y').strftime('%d-%m-%Y')
+
+            rows.append(_row)
+
+    end_date, start_date = rows[0][0], rows[-1][0]
+
+    return end_date, start_date, headers, rows
 
 
 class InvalidParameters(ValueError):
