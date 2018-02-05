@@ -12,8 +12,8 @@ from requests import get
 
 def get_url_data(url):
     """
-    This method downloads the data of the webpage.
-    :param url: 'url' of the webpage to download
+    This method downloads the data of the web page.
+    :param url: 'url' of the web page to download
     :return: response object of get request of the 'url'
     """
 
@@ -31,8 +31,8 @@ def get_url_data(url):
 def get_coin_id(coin_code):
     """
     This method fetches the name(id) of currency from the given code
-    :param coin_code: coin code of a cryptocurerncy e.g. btc
-    :return: coin-id for the a cryptocurerncy on the coinmarketcap.com
+    :param coin_code: coin code of a cryptocurrency e.g. btc
+    :return: coin-id for the a cryptocurrency on the coinmarketcap.com
     """
 
     try:
@@ -52,9 +52,9 @@ def get_coin_id(coin_code):
 
 def get_begin_latest_dates(coin_code):
     """
-    Fetches the date (begin_date) since when the data is available on coinmarketcap.
-    And date (latest_date) upto which data is available.
-    :param coin_code: coin code of a cryptocurerncy e.g. btc
+    Fetches the date (begin_date) since when the data is available on coinmarketcap.com.
+    And date (latest_date) up to which data is available.
+    :param coin_code: coin code of a cryptocurrency e.g. btc
     :return: 'begin_date', 'latest_date' for given 'coin_code'
     """
 
@@ -78,7 +78,7 @@ def download_data(coin_code, start_date, end_date):
     """
     Download HTML price history for the specified cryptocurrency and time range from CoinMarketCap.
 
-    :param coin_code: coin code of a cryptocurerncy e.g. btc
+    :param coin_code: coin code of a cryptocurrency e.g. btc
     :param start_date: date since when to scrape data (in the format of dd-mm-yyyy)
     :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
     :return: returns html of the webpage having historical data of cryptocurrency for certain duration
