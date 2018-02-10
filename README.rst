@@ -1,5 +1,3 @@
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD?ref=badge_shield)
-
 .. -*-restructuredtext-*-
 
 cryptoCMD: cryptoCurrency Market Data
@@ -10,6 +8,10 @@ cryptoCMD: cryptoCurrency Market Data
 
 .. image:: https://img.shields.io/pypi/v/cryptoCMD.svg
     :target: https://pypi.python.org/pypi/cryptoCMD
+    
+.. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD.svg?type=shield
+    :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD?ref=badge_shield
+    :alt: FOSSA Status
 
 .. image:: https://img.shields.io/pypi/l/cryptoCMD.svg
     :target: https://github.com/guptarohit/cryptoCMD/blob/master/LICENSE
@@ -19,6 +21,10 @@ cryptoCMD: cryptoCurrency Market Data
 
 .. image:: https://img.shields.io/pypi/wheel/cryptoCMD.svg
     :target: https://pypi.python.org/pypi/cryptoCMD
+
+.. image:: http://hits.dwyl.io/guptarohit/cryptoCMD.svg	
+    :target: http://hits.dwyl.io/guptarohit/cryptoCMD
+    :alt: HitCount
 
 Cryptocurrency historical market price data scraper written in Python.
 
@@ -98,5 +104,9 @@ Contributing
 
 Feel free to make a pull request! :octocat:
 
+License
+-------
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD?ref=badge_large)
+.. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD.svg?type=large
+    :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD?ref=badge_large
+    :alt: FOSSA Status
