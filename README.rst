@@ -8,6 +8,9 @@ cryptoCMD: cryptoCurrency Market Data
 
 .. image:: https://img.shields.io/pypi/v/cryptoCMD.svg
     :target: https://pypi.python.org/pypi/cryptoCMD
+
+.. image:: https://travis-ci.org/guptarohit/cryptoCMD.svg?branch=master
+    :target: https://travis-ci.org/guptarohit/cryptoCMD
     
 .. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD.svg?type=shield
     :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD?ref=badge_shield
@@ -17,9 +20,6 @@ cryptoCMD: cryptoCurrency Market Data
     :target: https://github.com/guptarohit/cryptoCMD/blob/master/LICENSE
 
 .. image:: https://img.shields.io/pypi/pyversions/cryptoCMD.svg
-    :target: https://pypi.python.org/pypi/cryptoCMD
-
-.. image:: https://img.shields.io/pypi/wheel/cryptoCMD.svg
     :target: https://pypi.python.org/pypi/cryptoCMD
 
 .. image:: http://hits.dwyl.io/guptarohit/cryptoCMD.svg	
