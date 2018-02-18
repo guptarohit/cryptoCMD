@@ -126,11 +126,11 @@ class CmcScraper(object):
         self._download_data(**kwargs)
 
         if csv_path is None:
-            """ Export in current directory if path not specified"""
+            # Export in current directory if path not specified
             csv_path = os.getcwd()
 
         if csv_name is None:
-            """ Make name fo file in format of {coin_code}_{start_date}_{end_date}.csv"""
+            # Make name fo file in format of {coin_code}_{start_date}_{end_date}.csv
             csv_name = '{0}_{1}_{2}.csv'.format(self.coin_code, self.start_date, self.end_date)
 
         if not csv_name.endswith('.csv'):
@@ -147,4 +147,3 @@ class CmcScraper(object):
         except IOError as err:
             errno, strerror = err.args
             print('I/O error({0}): {1}'.format(errno, strerror))
-        return
