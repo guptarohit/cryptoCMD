@@ -11,7 +11,6 @@ from __future__ import print_function
 __all__ = ['CmcScraper']
 
 import os
-import sys
 import csv
 from .utils import download_coin_data, extract_data, InvalidParameters
 
