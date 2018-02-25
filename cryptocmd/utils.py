@@ -7,6 +7,7 @@ import re
 import sys
 import datetime
 from bs4 import BeautifulSoup
+from pyquery import PyQuery as pq
 from requests import get
 
 
@@ -122,29 +123,22 @@ def extract_data(html):
     Extract the price history from the HTML.
 
     :param html: html having historical price data
-    :return: headers(column name of data), rows (price data)
+    :return: end_date, start_date, headers(column name of data), rows(price data)
     """
 
-    soup = BeautifulSoup(html, 'html.parser')
+    raw_data = pq(html)
 
-    table = soup.find('table', {'class': 'table'})
-
-    th_tags = table.find_all('th')
-    headers = [th.get_text(strip=True) for th in th_tags]
-
-    raw_rows = table.findAll('tr')
+    headers = [col.text_content().strip() for col in raw_data('tr')[0]]
 
     rows = []
-    for row in raw_rows:
-        td_tags = row.find_all('td')
-        if td_tags:
-            # clean row data and change to appropriate data types
-            _row = [_native_type(_replace(td.get_text(strip=True), ',-*?')) for td in td_tags]
 
-            # change format of date ('Aug 24 2017' to '24-08-2017')
-            _row[0] = datetime.datetime.strptime(_row[0], '%b %d %Y').strftime('%d-%m-%Y')
+    for _row in raw_data('tr')[1:]:
+        row = [_native_type(_replace(col.text_content().strip(), ',-*?')) for col in _row.findall('td')]
 
-            rows.append(_row)
+        # change format of date ('Aug 24 2017' to '24-08-2017')
+        row[0] = datetime.datetime.strptime(row[0], '%b %d %Y').strftime('%d-%m-%Y')
+
+        rows.append(row)
 
     end_date, start_date = rows[0][0], rows[-1][0]
 
