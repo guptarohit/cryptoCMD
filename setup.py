@@ -63,7 +63,7 @@ setup(
     long_description=long_description,
     author=AUTHOR,
     url=URL,
-    packages=[NAME],
+    packages=find_packages(exclude=('tests',)),
     install_requires=required,
     include_package_data=True,
     extras_require={
