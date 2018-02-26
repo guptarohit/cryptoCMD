@@ -5,7 +5,7 @@ import io
 import os
 import sys
 from shutil import rmtree
-from setuptools import setup, Command
+from setuptools import setup, find_packages, Command
 
 # Package meta-data.
 NAME = 'cryptocmd'
