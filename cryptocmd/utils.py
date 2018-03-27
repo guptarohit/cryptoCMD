@@ -35,7 +35,7 @@ def get_coin_id(coin_code):
     """
 
     try:
-        url = 'https://api.coinmarketcap.com/v1/ticker/'
+        url = 'https://api.coinmarketcap.com/v1/ticker/?limit=0'
 
         json_resp = get_url_data(url).json()
 
