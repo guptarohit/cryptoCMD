@@ -94,6 +94,17 @@ Following are the columns of the data
 """""""""""""""""""""""""""""""""""""
 ``Date, Open, High, Low, Close, Volume, Market Cap``
 
+Docker
+------
+
+To build the image, run 
+``docker build -t crypto-cmd .```
+
+Run like this
+``docker run --rm -it crypto-cmd python samples/market-historical.py``
+
+or also mount the current working directory to output the csv files into the current working directory
+``docker run -v `pwd`:/usr/src --rm -it crypto-cmd python samples/market-historical.py``
 
 Acknowledgements
 ----------------
