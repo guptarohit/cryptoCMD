@@ -111,7 +111,7 @@ class CmcScraper(object):
         dataframe = pd.DataFrame(data=self.rows, columns=self.headers)
 
         # convert 'Date' column to datetime type
-        dataframe['Date'] = pd.to_datetime(dataframe['Date'])
+        dataframe['Date'] = pd.to_datetime(dataframe['Date'], dayfirst=True)
         return dataframe
 
     def export_csv(self, csv_name=None, csv_path=None, **kwargs):
