@@ -12,7 +12,7 @@ NAME = "cryptocmd"
 DESCRIPTION = "Cryptocurrency historical market price data scrapper."
 URL = "https://github.com/guptarohit/cryptocmd"
 AUTHOR = "Rohit Gupta"
-VERSION = "v0.4.1"
+VERSION = "v0.4.2"
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -66,7 +66,7 @@ setup(
     extras_require={"pandas": ["pandas"]},
     license="BSD",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Topic :: Utilities",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
