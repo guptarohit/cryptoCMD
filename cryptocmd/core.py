@@ -103,9 +103,10 @@ class CmcScraper(object):
         else:
             return self.headers, self.rows
 
-    def get_dataframe(self, **kwargs):
+    def get_dataframe(self, date_as_index=False, **kwargs):
         """
         This gives scraped data as DataFrame.
+        :param date_as_index: make 'Date' as index and remove 'Date' column.
         :param kwargs: Optional arguments that data downloader takes.
         :return: DataFrame of the downloaded data.
         """
@@ -126,7 +127,14 @@ class CmcScraper(object):
         dataframe = pd.DataFrame(data=self.rows, columns=self.headers)
 
         # convert 'Date' column to datetime type
-        dataframe["Date"] = pd.to_datetime(dataframe["Date"], dayfirst=True)
+        dataframe["Date"] = pd.to_datetime(
+            dataframe["Date"], format="%d-%m-%Y", dayfirst=True
+        )
+
+        if date_as_index:
+            # set 'Date' column as index and drop the the 'Date' column.
+            dataframe.set_index("Date", inplace=True)
+
         return dataframe
 
     def export_csv(self, csv_name=None, csv_path=None, **kwargs):
