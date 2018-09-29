@@ -12,6 +12,7 @@ __all__ = ["CmcScraper"]
 
 import os
 import csv
+from datetime import datetime
 from .utils import download_coin_data, extract_data, InvalidParameters
 
 
@@ -21,12 +22,20 @@ class CmcScraper(object):
 
     """
 
-    def __init__(self, coin_code, start_date=None, end_date=None, all_time=False):
+    def __init__(
+        self,
+        coin_code,
+        start_date=None,
+        end_date=None,
+        all_time=False,
+        order_ascending=False,
+    ):
         """
         :param coin_code: coin code of cryptocurrency e.g. btc
         :param start_date: date since when to scrape data (in the format of dd-mm-yyyy)
         :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
         :param all_time: 'True' if need data of all time for respective cryptocurrency
+        :param order_ascending: data ordered by 'Date' in ascending order (i.e. oldest first).
 
         """
 
@@ -34,6 +43,7 @@ class CmcScraper(object):
         self.start_date = start_date
         self.end_date = end_date
         self.all_time = bool(all_time)
+        self.order_ascending = order_ascending
         self.headers = []
         self.rows = []
 
@@ -70,6 +80,9 @@ class CmcScraper(object):
 
         # self.headers, self.rows, self.start_date, self.end_date = extract_data(table)
         self.end_date, self.start_date, self.headers, self.rows = extract_data(table)
+
+        if self.order_ascending:
+            self.rows.sort(key=lambda x: datetime.strptime(x[0], "%d-%m-%Y"))
 
     def get_data(self, verbose=False, **kwargs):
 
