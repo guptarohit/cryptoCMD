@@ -8,7 +8,7 @@ Cryptocurrency price History from coinmarketcap.com
 
 from __future__ import print_function
 
-__all__ = ['CmcScraper']
+__all__ = ["CmcScraper"]
 
 import os
 import csv
@@ -42,13 +42,14 @@ class CmcScraper(object):
             self.all_time = True
 
         if not (self.all_time or (self.start_date and self.end_date)):
-            raise InvalidParameters("'start_date' or 'end_date' cannot be empty if 'all_time' flag is False")
+            raise InvalidParameters(
+                "'start_date' or 'end_date' cannot be empty if 'all_time' flag is False"
+            )
 
     def __repr__(self):
-        return '<CmcScraper coin_code:{}, start_date:{}, end_date:{}, all_time:{}>'.format(self.coin_code,
-                                                                                           self.start_date,
-                                                                                           self.end_date,
-                                                                                           self.all_time)
+        return "<CmcScraper coin_code:{}, start_date:{}, end_date:{}, all_time:{}>".format(
+            self.coin_code, self.start_date, self.end_date, self.all_time
+        )
 
     def _download_data(self, **kwargs):
         """
@@ -57,7 +58,7 @@ class CmcScraper(object):
         :return:
         """
 
-        forced = kwargs.get('forced')
+        forced = kwargs.get("forced")
 
         if self.headers and self.rows and not forced:
             return
@@ -82,10 +83,10 @@ class CmcScraper(object):
         self._download_data(**kwargs)
 
         if verbose:
-            print(*self.headers, sep=', ')
+            print(*self.headers, sep=", ")
 
             for row in self.rows:
-                print(*row, sep=', ')
+                print(*row, sep=", ")
         else:
             return self.headers, self.rows
 
@@ -104,14 +105,15 @@ class CmcScraper(object):
         if pd is None:
             raise NotImplementedError(
                 "DataFrame Format requires 'pandas' to be installed."
-                "Try : pip install pandas")
+                "Try : pip install pandas"
+            )
 
         self._download_data(**kwargs)
 
         dataframe = pd.DataFrame(data=self.rows, columns=self.headers)
 
         # convert 'Date' column to datetime type
-        dataframe['Date'] = pd.to_datetime(dataframe['Date'], dayfirst=True)
+        dataframe["Date"] = pd.to_datetime(dataframe["Date"], dayfirst=True)
         return dataframe
 
     def export_csv(self, csv_name=None, csv_path=None, **kwargs):
@@ -131,19 +133,23 @@ class CmcScraper(object):
 
         if csv_name is None:
             # Make name fo file in format of {coin_code}_{start_date}_{end_date}.csv
-            csv_name = '{0}_{1}_{2}.csv'.format(self.coin_code, self.start_date, self.end_date)
+            csv_name = "{0}_{1}_{2}.csv".format(
+                self.coin_code, self.start_date, self.end_date
+            )
 
-        if not csv_name.endswith('.csv'):
-            csv_name += '.csv'
+        if not csv_name.endswith(".csv"):
+            csv_name += ".csv"
 
-        _csv = '{0}/{1}'.format(csv_path, csv_name)
+        _csv = "{0}/{1}".format(csv_path, csv_name)
 
         try:
-            with open(_csv, 'w', newline='', encoding='utf-8') as csvfile:
-                writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
+            with open(_csv, "w", newline="", encoding="utf-8") as csvfile:
+                writer = csv.writer(
+                    csvfile, delimiter=",", quoting=csv.QUOTE_NONNUMERIC
+                )
                 writer.writerow(self.headers)
                 for data in self.rows:
                     writer.writerow(data)
         except IOError as err:
             errno, strerror = err.args
-            print('I/O error({0}): {1}'.format(errno, strerror))
+            print("I/O error({0}): {1}".format(errno, strerror))

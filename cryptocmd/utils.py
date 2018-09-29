@@ -20,10 +20,10 @@ def get_url_data(url):
         response = get(url)
         return response
     except Exception as e:
-        if hasattr(e, 'message'):
-            print('Error message (get_url_data) :', e.message)
+        if hasattr(e, "message"):
+            print("Error message (get_url_data) :", e.message)
         else:
-            print('Error message (get_url_data) :', e)
+            print("Error message (get_url_data) :", e)
         sys.exit(1)
 
 
@@ -35,15 +35,15 @@ def get_coin_id(coin_code):
     """
 
     try:
-        url = 'https://api.coinmarketcap.com/v1/ticker/?limit=0'
+        url = "https://api.coinmarketcap.com/v1/ticker/?limit=0"
 
         json_resp = get_url_data(url).json()
 
         coin_code = coin_code.upper()
 
         for coin in json_resp:
-            if coin['symbol'] == coin_code:
-                return coin['id']
+            if coin["symbol"] == coin_code:
+                return coin["id"]
         raise InvalidCoinCode('This coin code is unavailable on "coinmarketcap.com"')
     except Exception as e:
         raise e
@@ -61,31 +61,37 @@ def download_coin_data(coin_code, start_date, end_date):
 
     if start_date is None:
         # default start date on coinmarketcap.com
-        start_date = '28-4-2013'
+        start_date = "28-4-2013"
 
     if end_date is None:
         yesterday = datetime.date.today() - datetime.timedelta(1)
-        end_date = yesterday.strftime('%d-%m-%Y')
+        end_date = yesterday.strftime("%d-%m-%Y")
 
     coin_id = get_coin_id(coin_code)
 
     # Format the dates as required for the url.
-    start_date = datetime.datetime.strptime(start_date, '%d-%m-%Y').strftime('%Y%m%d')
-    end_date = datetime.datetime.strptime(end_date, '%d-%m-%Y').strftime('%Y%m%d')
+    start_date = datetime.datetime.strptime(start_date, "%d-%m-%Y").strftime("%Y%m%d")
+    end_date = datetime.datetime.strptime(end_date, "%d-%m-%Y").strftime("%Y%m%d")
 
-    url = 'https://coinmarketcap.com/currencies/{0}/historical-data/?start={1}&end={2}'.format(coin_id, start_date,
-                                                                                               end_date)
+    url = "https://coinmarketcap.com/currencies/{0}/historical-data/?start={1}&end={2}".format(
+        coin_id, start_date, end_date
+    )
 
     try:
         html = get_url_data(url).text
         return html
     except Exception as e:
-        print("Error fetching price data for {} for interval '{}' and '{}'", coin_code, start_date, end_date)
+        print(
+            "Error fetching price data for {} for interval '{}' and '{}'",
+            coin_code,
+            start_date,
+            end_date,
+        )
 
-        if hasattr(e, 'message'):
-            print('Error message (download_data) :', e.message)
+        if hasattr(e, "message"):
+            print("Error message (download_data) :", e.message)
         else:
-            print('Error message (download_data) :', e)
+            print("Error message (download_data) :", e)
 
 
 def _native_type(s):
@@ -107,12 +113,13 @@ def _native_type(s):
 def _replace(s, bad_chars):
     if sys.version_info > (3, 0):
         # For Python 3
-        without_bad_chars = str.maketrans('', '', bad_chars)
+        without_bad_chars = str.maketrans("", "", bad_chars)
         return s.translate(without_bad_chars)
     else:
         # For Python 2
         import string
-        identity = string.maketrans('', '')
+
+        identity = string.maketrans("", "")
         return s.translate(identity, bad_chars)
 
 
@@ -126,15 +133,18 @@ def extract_data(html):
 
     raw_data = pq(html)
 
-    headers = [col.text_content().strip('*') for col in raw_data('tr')[0]]
+    headers = [col.text_content().strip("*") for col in raw_data("tr")[0]]
 
     rows = []
 
-    for _row in raw_data('tr')[1:]:
-        row = [_native_type(_replace(col.text_content().strip(), ',-*?')) for col in _row.findall('td')]
+    for _row in raw_data("tr")[1:]:
+        row = [
+            _native_type(_replace(col.text_content().strip(), ",-*?"))
+            for col in _row.findall("td")
+        ]
 
         # change format of date ('Aug 24 2017' to '24-08-2017')
-        row[0] = datetime.datetime.strptime(row[0], '%b %d %Y').strftime('%d-%m-%Y')
+        row[0] = datetime.datetime.strptime(row[0], "%b %d %Y").strftime("%d-%m-%Y")
 
         rows.append(row)
 
