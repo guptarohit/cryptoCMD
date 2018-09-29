@@ -19,9 +19,6 @@ here = os.path.abspath(os.path.dirname(__file__))
 with io.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
-with io.open("requirements.txt") as f:
-    required = f.readlines()
-
 
 class UploadCommand(Command):
     """Support setup.py upload."""
@@ -64,7 +61,7 @@ setup(
     author=AUTHOR,
     url=URL,
     packages=find_packages(exclude=("tests",)),
-    install_requires=required,
+    install_requires=["requests", "pyquery"],
     include_package_data=True,
     extras_require={"pandas": ["pandas"]},
     license="BSD",
