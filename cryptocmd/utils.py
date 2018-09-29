@@ -126,7 +126,7 @@ def extract_data(html):
 
     raw_data = pq(html)
 
-    headers = [col.text_content().strip() for col in raw_data('tr')[0]]
+    headers = [col.text_content().strip('*') for col in raw_data('tr')[0]]
 
     rows = []
 
