@@ -23,6 +23,10 @@ cryptoCMD: cryptoCurrency Market Data
     :target: https://pepy.tech/project/cryptoCMD
     :alt: Downloads
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/ambv/black
+    :alt: Code style: black
+
 Cryptocurrency historical market price data scraper written in Python.
 
 
