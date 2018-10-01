@@ -12,7 +12,6 @@ NAME = "cryptocmd"
 DESCRIPTION = "Cryptocurrency historical market price data scrapper."
 URL = "https://github.com/guptarohit/cryptocmd"
 AUTHOR = "Rohit Gupta"
-VERSION = "v0.4.2"
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -53,9 +52,13 @@ class UploadCommand(Command):
         sys.exit()
 
 
+about = {}
+with io.open(os.path.join(here, "cryptocmd", "__version__.py"), encoding="utf-8") as f:
+    exec(f.read(), about)
+
 setup(
     name=NAME,
-    version=VERSION,
+    version=about["__version__"],
     description=DESCRIPTION,
     long_description=long_description,
     author=AUTHOR,
