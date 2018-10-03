@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 requests = "*"
 pyquery = "*"
+halo = "*"
+click = "*"
 
 [dev-packages]
 black = "*"

@@ -64,6 +64,7 @@ setup(
     author=AUTHOR,
     url=URL,
     packages=find_packages(exclude=("tests",)),
+    entry_points={"console_scripts": ["cryptocmd = cryptocmd.cli:cli"]},
     install_requires=["requests", "pyquery"],
     include_package_data=True,
     extras_require={"pandas": ["pandas"]},

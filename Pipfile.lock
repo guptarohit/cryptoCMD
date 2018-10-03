@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "41b9ad374428ca379daa7d4c9c3a308b470e388f2aa6007a99733377d3564f3f"
+            "sha256": "cf2f68a5f63fb87fd7c2fed59429328b8d0c9f0c1f5b6b20bab2cabf0a86a0c4"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -30,6 +30,21 @@
             ],
             "version": "==3.0.4"
         },
+        "click": {
+            "hashes": [
+                "sha256:2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13",
+                "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"
+            ],
+            "index": "pypi",
+            "version": "==7.0"
+        },
+        "colorama": {
+            "hashes": [
+                "sha256:463f8483208e921368c9f306094eb6f725c6ca42b0f97e313cb5d5512459feda",
+                "sha256:48eb22f4f8461b1df5734a074b57042430fb06e1d61bd1e11b078c0fe6d7a1f1"
+            ],
+            "version": "==0.3.9"
+        },
         "cssselect": {
             "hashes": [
                 "sha256:066d8bc5229af09617e24b3ca4d52f1f9092d9e061931f4184cd572885c23204",
@@ -38,12 +53,40 @@
             "markers": "python_version != '3.2.*' and python_version != '3.3.*' and python_version >= '2.7' and python_version != '3.0.*' and python_version != '3.1.*'",
             "version": "==1.0.3"
         },
+        "cursor": {
+            "hashes": [
+                "sha256:8ee9fe5b925e1001f6ae6c017e93682583d2b4d1ef7130a26cfcdf1651c0032c"
+            ],
+            "version": "==1.2.0"
+        },
+        "enum34": {
+            "hashes": [
+                "sha256:2d81cbbe0e73112bdfe6ef8576f2238f2ba27dd0d55752a776c41d38b7da2850",
+                "sha256:644837f692e5f550741432dd3f223bbb9852018674981b1664e5dc339387588a",
+                "sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79",
+                "sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1"
+            ],
+            "version": "==1.1.6"
+        },
+        "halo": {
+            "hashes": [
+                "sha256:c87d581eedbafc224ff4dc14fb5d89db24776163ca48a23857691ac9c3707c0a"
+            ],
+            "index": "pypi",
+            "version": "==0.0.17"
+        },
         "idna": {
             "hashes": [
                 "sha256:156a6814fb5ac1fc6850fb002e0852d56c0c8d2531923a51032d1b70760e186e",
                 "sha256:684a38a6f903c1d71d6d5fac066b58d7768af4de2b832e426ec79c30daa94a16"
             ],
             "version": "==2.7"
+        },
+        "log-symbols": {
+            "hashes": [
+                "sha256:87be2f283cd6f455d89b76abcf2805fad5692ec9dcd8a31d10a4c975f51392eb"
+            ],
+            "version": "==0.0.11"
         },
         "lxml": {
             "hashes": [
@@ -96,6 +139,25 @@
             "index": "pypi",
             "version": "==2.19.1"
         },
+        "six": {
+            "hashes": [
+                "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9",
+                "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
+            ],
+            "version": "==1.11.0"
+        },
+        "spinners": {
+            "hashes": [
+                "sha256:f396fea1ee00c0622988d7d2bf2895d26dd6f70850ca2ce94eaca52ca4873560"
+            ],
+            "version": "==0.0.23"
+        },
+        "termcolor": {
+            "hashes": [
+                "sha256:1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"
+            ],
+            "version": "==1.1.0"
+        },
         "urllib3": {
             "hashes": [
                 "sha256:a68ac5e15e76e7e5dd2b8f94007233e01effe3e50e8daddf69acfd81cb686baf",
@@ -133,7 +195,7 @@
                 "sha256:2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13",
                 "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"
             ],
-            "markers": "python_version != '3.1.*' and python_version >= '2.7' and python_version != '3.2.*' and python_version != '3.0.*' and python_version != '3.3.*'",
+            "index": "pypi",
             "version": "==7.0"
         },
         "toml": {
