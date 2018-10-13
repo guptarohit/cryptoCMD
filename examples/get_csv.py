@@ -9,4 +9,4 @@ scraper = CmcScraper("btc")
 
 # You can pass name for the csv explicitly,
 # Else it will be named in format {coin_code}_{start_date}_{end_date}.csv
-scraper.export_csv("btc_all_time.csv")
+scraper.export("csv", name="btc_all_time")
