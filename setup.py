@@ -64,7 +64,7 @@ setup(
     author=AUTHOR,
     url=URL,
     packages=find_packages(exclude=("tests",)),
-    install_requires=["requests", "pyquery"],
+    install_requires=["requests", "pyquery", "tablib==0.11.4"],
     include_package_data=True,
     extras_require={"pandas": ["pandas"]},
     license="BSD",
