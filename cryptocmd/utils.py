@@ -35,15 +35,18 @@ def get_coin_id(coin_code):
     """
 
     try:
-        url = "https://api.coinmarketcap.com/v1/ticker/?limit=0"
+        url = "https://coinmarketcap.com/all/views/all/"
 
-        json_resp = get_url_data(url).json()
+        html = get_url_data(url).text
+        raw_data = pq(html)
 
         coin_code = coin_code.upper()
 
-        for coin in json_resp:
-            if coin["symbol"] == coin_code:
-                return coin["id"]
+        for _row in raw_data("tr")[1:]:
+            symbol = _row.cssselect("td.text-left.col-symbol")[0].text_content()
+            coin_id = raw_data("tr")[4].values()[0].split("id-")[1]
+            if symbol == coin_code:
+                return coin_id
         raise InvalidCoinCode('This coin code is unavailable on "coinmarketcap.com"')
     except Exception as e:
         raise e
