@@ -59,14 +59,17 @@ To get all time historical data of a cryptocurrency
 
     from cryptocmd import CmcScraper
 
-    # initialise scraper without passing time interval
-    scraper = CmcScraper('XRP')
+    # initialise scraper without time interval
+    scraper = CmcScraper("XRP")
 
-    # data as list of list in a variable
+    # get raw data as list of list
     headers, data = scraper.get_data()
 
-    # export the data as csv file, you can also pass optional name parameter
-    scraper.export_csv('xrp_all_time.csv')
+    # get data in a json format
+    xrp_json_data = scraper.get_data("json")
+
+    # export the data as csv file, you can also pass optional `name` parameter
+    scraper.export("csv", name="xrp_all_time")
 
     # Pandas dataFrame for the same data
     df = scraper.get_dataframe()
@@ -78,14 +81,17 @@ To get data of a cryptocurrency for some days
 
     from cryptocmd import CmcScraper
 
-    # initialise scraper
-    scraper = CmcScraper('XRP', '15-10-2017', '25-10-2017')
+    # initialise scraper with time interval
+    scraper = CmcScraper("XRP", "15-10-2017", "25-10-2017")
 
-    # get data as list of list
+    # get raw data as list of list
     headers, data = scraper.get_data()
 
+    # get data in a json format
+    json_data = scraper.get_data("json")
+
     # export the data to csv
-    scraper.export_csv()
+    scraper.export("csv")
 
     # get dataframe for the data
     df = scraper.get_dataframe()

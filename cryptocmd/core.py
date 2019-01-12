@@ -12,6 +12,8 @@ __all__ = ["CmcScraper"]
 
 import os
 import csv
+import tablib
+import warnings
 from datetime import datetime
 from .utils import download_coin_data, extract_data, InvalidParameters
 
@@ -84,14 +86,21 @@ class CmcScraper(object):
         if self.order_ascending:
             self.rows.sort(key=lambda x: datetime.strptime(x[0], "%d-%m-%Y"))
 
-    def get_data(self, verbose=False, **kwargs):
-
+    def get_data(self, format="", verbose=False, **kwargs):
         """
-        This method fetches downloaded the data.
-        :param verbose: (optional) Flag to enable verbose.
+        This method returns the downloaded data in specified format.
+        :param format: extension name of data format. Available: json, xls, yaml, csv, dbf, tsv, html, latex, xlsx, ods
+        :param verbose: (optional) Flag to enable verbose only.
         :param kwargs: Optional arguments that data downloader takes.
         :return:
         """
+        if format:
+            data = tablib.Dataset()
+
+            if format not in data._formats:
+                raise tablib.UnsupportedFormat(
+                    "Format {0} cannot be exported.".format(format)
+                )
 
         self._download_data(**kwargs)
 
@@ -100,6 +109,11 @@ class CmcScraper(object):
 
             for row in self.rows:
                 print(*row, sep=", ")
+        elif format:
+            data.headers = self.headers
+            for row in self.rows:
+                data.append(row)
+            return data.export(format)
         else:
             return self.headers, self.rows
 
@@ -145,6 +159,11 @@ class CmcScraper(object):
         :param kwargs: Optional arguments that data downloader takes.
         :return:
         """
+        warnings.warn(
+            "export_csv will be deprecated; Use 'export' method instead, e.g. export('csv')",
+            PendingDeprecationWarning,
+            stacklevel=2,
+        )
 
         self._download_data(**kwargs)
 
@@ -174,3 +193,40 @@ class CmcScraper(object):
         except IOError as err:
             errno, strerror = err.args
             print("I/O error({0}): {1}".format(errno, strerror))
+
+    def export(self, format, name=None, path=None, **kwargs):
+        """
+        Exports the data to specified file format
+        :param format: extension name of file format. Available: json, xls, yaml, csv, dbf, tsv, html, latex, xlsx, ods
+        :param name: (optional) name of file.
+        :param path: (optional) output file path.
+        :param kwargs: Optional arguments that data downloader takes.
+        :return:
+        """
+
+        data = self.get_data(format, **kwargs)
+
+        if path is None:
+            # Export in current directory if path not specified
+            path = os.getcwd()
+
+        if name is None:
+            # Make name of file in format: {coin_code}_{start_date}_{end_date}.csv
+            name = "{0}_{1}_{2}".format(self.coin_code, self.start_date, self.end_date)
+
+        if not name.endswith(".{}".format(format)):
+            name += ".{}".format(format)
+
+        _file = "{0}/{1}".format(path, name)
+
+        try:
+            with open(_file, "wb") as f:
+                if type(data) is str:
+                    f.write(data.encode("utf-8"))
+                else:
+                    f.write(data)
+        except IOError as err:
+            errno, strerror = err.args
+            print("I/O error({0}): {1}".format(errno, strerror))
+        except Exception as err:
+            print("format: {0}, Error: {1}".format(format, err))
