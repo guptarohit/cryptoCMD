@@ -80,7 +80,6 @@ class CmcScraper(object):
 
         table = download_coin_data(self.coin_code, self.start_date, self.end_date)
 
-        # self.headers, self.rows, self.start_date, self.end_date = extract_data(table)
         self.end_date, self.start_date, self.headers, self.rows = extract_data(table)
 
         if self.order_ascending:
