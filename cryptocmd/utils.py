@@ -136,11 +136,11 @@ def extract_data(html):
 
     raw_data = pq(html)
 
-    headers = [col.text_content().strip("*") for col in raw_data("tr")[0]]
+    headers = [col.text_content().strip("*") for col in raw_data("table:first>thead>tr>th")]
 
     rows = []
 
-    for _row in raw_data("tr")[1:]:
+    for _row in raw_data("table:first>tbody>tr"):
         row = [
             _native_type(_replace(col.text_content().strip(), ",-*?"))
             for col in _row.findall("td")
