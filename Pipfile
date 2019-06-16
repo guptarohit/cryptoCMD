@@ -6,10 +6,10 @@ name = "pypi"
 [packages]
 requests = "*"
 pyquery = "*"
-tablib = "==0.11.4"
+tablib = "*"
 
 [dev-packages]
 black = "*"
 
-[requires]
-python_version = "3.6"
+[pipenv]
+allow_prereleases = true
