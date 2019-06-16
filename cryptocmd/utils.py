@@ -47,7 +47,7 @@ def get_coin_id(coin_code):
             coin_id = _row.values()[0].split("id-")[1]
             if symbol == coin_code:
                 return coin_id
-        raise InvalidCoinCode('This coin code is unavailable on "coinmarketcap.com"')
+        raise InvalidCoinCode("'{}' coin code is unavailable on coinmarketcap.com".format(coin_code))
     except Exception as e:
         raise e
 
