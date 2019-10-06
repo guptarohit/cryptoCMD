@@ -24,7 +24,7 @@ def get_url_data(url):
             print("Error message (get_url_data) :", e.message)
         else:
             print("Error message (get_url_data) :", e)
-        sys.exit(1)
+        raise e
 
 
 def get_coin_id(coin_code):
