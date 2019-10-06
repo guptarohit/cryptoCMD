@@ -44,7 +44,7 @@ def get_coin_id(coin_code):
 
         for _row in raw_data("tr")[1:]:
             symbol = _row.cssselect("td.text-left.col-symbol")[0].text_content()
-            coin_id = _row.values()[0].split("id-")[1]
+            coin_id = _row.values()[0][3:]
             if symbol == coin_code:
                 return coin_id
         raise InvalidCoinCode("'{}' coin code is unavailable on coinmarketcap.com".format(coin_code))
