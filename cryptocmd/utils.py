@@ -140,7 +140,7 @@ def extract_data(html):
 
     rows = []
 
-    for _row in raw_data("table:first>tbody>tr"):
+    for _row in raw_data("table tbody>tr"):
         row = [
             _native_type(_replace(col.text_content().strip(), ",-*?"))
             for col in _row.findall("td")
