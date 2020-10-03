@@ -93,22 +93,15 @@ class CmcScraper(object):
         :param kwargs: Optional arguments that data downloader takes.
         :return:
         """
-        if format:
-            data = tablib.Dataset()
-
-            if format not in data._formats:
-                raise tablib.UnsupportedFormat(
-                    "Format {0} cannot be exported.".format(format)
-                )
 
         self._download_data(**kwargs)
-
         if verbose:
             print(*self.headers, sep=", ")
 
             for row in self.rows:
                 print(*row, sep=", ")
         elif format:
+            data = tablib.Dataset()
             data.headers = self.headers
             for row in self.rows:
                 data.append(row)

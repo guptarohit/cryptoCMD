@@ -41,10 +41,12 @@ def get_coin_id(coin_code):
         raw_data = pq(html)
 
         coin_code = coin_code.upper()
+        data_table = raw_data("tbody")[0]
 
-        for _row in raw_data("tr")[1:]:
-            symbol = _row.cssselect("td.text-left.col-symbol")[0].text_content()
-            coin_id = _row.values()[0][3:]
+        for _row in data_table.findall("tr"):
+            symbol = _row.findall("td")[2].text_content()
+            coin_link = _row.findall("td")[1].find_class("cmc-link")[0]
+            coin_id = coin_link.values()[0].lstrip("/currencies/")[:-1]
             if symbol == coin_code:
                 return coin_id
         raise InvalidCoinCode("'{}' coin code is unavailable on coinmarketcap.com".format(coin_code))
@@ -140,7 +142,7 @@ def extract_data(html):
 
     rows = []
 
-    for _row in raw_data("table tbody>tr"):
+    for _row in raw_data(".cmc-tab-historical-data table tbody>tr"):
         row = [
             _native_type(_replace(col.text_content().strip(), ",-*?"))
             for col in _row.findall("td")
