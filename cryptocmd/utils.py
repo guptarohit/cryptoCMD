@@ -46,7 +46,9 @@ def get_coin_id(coin_code):
         for _row in data_table.findall("tr"):
             symbol = _row.findall("td")[2].text_content()
             coin_link = _row.findall("td")[1].find_class("cmc-link")[0]
-            coin_id = coin_link.values()[0].lstrip("/currencies/")[:-1]
+            # Causes error on some coins like ethereum. to fix this error we must use text property of coin_link
+            #coin_id = coin_link.values()[0].lstrip("/currencies/")[:-1]
+            coin_id = coin_link.text.lower()
             if symbol == coin_code:
                 return coin_id
         raise InvalidCoinCode("'{}' coin code is unavailable on coinmarketcap.com".format(coin_code))
