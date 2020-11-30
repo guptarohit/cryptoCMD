@@ -74,17 +74,31 @@ def download_coin_data(coin_code, start_date, end_date):
 
     coin_id = get_coin_id(coin_code)
 
-    # Format the dates as required for the url.
-    start_date = datetime.datetime.strptime(start_date, "%d-%m-%Y").strftime("%Y%m%d")
-    end_date = datetime.datetime.strptime(end_date, "%d-%m-%Y").strftime("%Y%m%d")
+    # convert the dates to timestamp for the url
+    start_date_timestamp = int(
+        (
+            datetime.datetime.strptime(start_date, "%d-%m-%Y")
+            - datetime.timedelta(days=1)
+        )
+        .replace(tzinfo=datetime.timezone.utc)
+        .timestamp()
+    )
 
-    url = "https://coinmarketcap.com/currencies/{0}/historical-data/?start={1}&end={2}".format(
-        coin_id, start_date, end_date
+    end_date_timestamp = int(
+        datetime.datetime.strptime(end_date, "%d-%m-%Y")
+        .replace(tzinfo=datetime.timezone.utc)
+        .timestamp()
+    )
+
+    api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/ohlcv/historical?convert=USD&slug={}&time_end={}&time_start={}".format(
+        coin_id, end_date_timestamp, start_date_timestamp
     )
 
     try:
-        html = get_url_data(url).text
-        return html
+        json_data = get_url_data(api_url).json()
+        if json_data["status"]["error_code"] != 0:
+            raise Exception(json_data["status"]["error_message"])
+        return json_data
     except Exception as e:
         print(
             "Error fetching price data for {} for interval '{}' and '{}'",
@@ -99,22 +113,6 @@ def download_coin_data(coin_code, start_date, end_date):
             print("Error message (download_data) :", e)
 
 
-def _native_type(s):
-    """
-    Convert value in the string to its native (i.e. either int, float or str) type.
-    :param s: string
-    :return: value in native type
-    """
-
-    try:
-        return int(s)
-    except ValueError:
-        try:
-            return float(s)
-        except ValueError:
-            return s
-
-
 def _replace(s, bad_chars):
     if sys.version_info > (3, 0):
         # For Python 3
@@ -126,36 +124,6 @@ def _replace(s, bad_chars):
 
         identity = string.maketrans("", "")
         return s.translate(identity, bad_chars)
-
-
-def extract_data(html):
-    """
-    Extract the price history from the HTML.
-
-    :param html: html having historical price data
-    :return: end_date, start_date, headers(column name of data), rows(price data)
-    """
-
-    raw_data = pq(html)
-
-    headers = [col.text_content().strip("*") for col in raw_data("table:first>thead>tr>th")]
-
-    rows = []
-
-    for _row in raw_data(".cmc-tab-historical-data table tbody>tr"):
-        row = [
-            _native_type(_replace(col.text_content().strip(), ",-*?"))
-            for col in _row.findall("td")
-        ]
-
-        # change format of date ('Aug 24 2017' to '24-08-2017')
-        row[0] = datetime.datetime.strptime(row[0], "%b %d %Y").strftime("%d-%m-%Y")
-
-        rows.append(row)
-
-    end_date, start_date = rows[0][0], rows[-1][0]
-
-    return end_date, start_date, headers, rows
 
 
 class InvalidParameters(ValueError):
