@@ -59,8 +59,10 @@ class CmcScraper(object):
             )
 
     def __repr__(self):
-        return "<CmcScraper coin_code:{}, start_date:{}, end_date:{}, all_time:{}>".format(
-            self.coin_code, self.start_date, self.end_date, self.all_time
+        return (
+            "<CmcScraper coin_code:{}, start_date:{}, end_date:{}, all_time:{}>".format(
+                self.coin_code, self.start_date, self.end_date, self.all_time
+            )
         )
 
     def _download_data(self, **kwargs):

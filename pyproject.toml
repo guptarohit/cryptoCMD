@@ -27,7 +27,6 @@ include = [
 [tool.poetry.dependencies]
 python = "^3.6"
 requests = "*"
-pyquery = "*"
 tablib = "*"
 
 [tool.poetry.dev-dependencies]

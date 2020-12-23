@@ -5,7 +5,6 @@ from __future__ import print_function
 
 import sys
 import datetime
-from pyquery import PyQuery as pq
 from requests import get
 
 
@@ -34,24 +33,28 @@ def get_coin_id(coin_code):
     :return: coin-id for the a cryptocurrency on the coinmarketcap.com
     """
 
+    api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/map?symbol={coin_code}".format(
+        coin_code=coin_code
+    )
+
     try:
-        url = "https://coinmarketcap.com/all/views/all/"
-
-        html = get_url_data(url).text
-        raw_data = pq(html)
-
-        coin_code = coin_code.upper()
-        data_table = raw_data("tbody")[0]
-
-        for _row in data_table.findall("tr"):
-            symbol = _row.findall("td")[2].text_content()
-            coin_link = _row.findall("td")[1].find_class("cmc-link")[0]
-            coin_id = coin_link.values()[0].split("/")[-2]
-            if symbol == coin_code:
-                return coin_id
-        raise InvalidCoinCode("'{}' coin code is unavailable on coinmarketcap.com".format(coin_code))
+        json_data = get_url_data(api_url).json()
+        error_code = json_data["status"]["error_code"]
+        if error_code == 0:
+            return json_data["data"][0]["slug"]
+        if error_code == 400:
+            raise InvalidCoinCode(
+                "'{}' coin code is unavailable on coinmarketcap.com".format(coin_code)
+            )
+        else:
+            raise Exception(json_data["status"]["error_message"])
     except Exception as e:
-        raise e
+        print("Error fetching coin id data for coin code {}", coin_code)
+
+        if hasattr(e, "message"):
+            print("Error message:", e.message)
+        else:
+            print("Error message:", e)
 
 
 def download_coin_data(coin_code, start_date, end_date):
