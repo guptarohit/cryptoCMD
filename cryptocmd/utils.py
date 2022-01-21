@@ -57,13 +57,14 @@ def get_coin_id(coin_code):
             print("Error message:", e)
 
 
-def download_coin_data(coin_code, start_date, end_date):
+def download_coin_data(coin_code, start_date, end_date,fiat):
     """
     Download HTML price history for the specified cryptocurrency and time range from CoinMarketCap.
 
     :param coin_code: coin code of a cryptocurrency e.g. btc
     :param start_date: date since when to scrape data (in the format of dd-mm-yyyy)
     :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
+    :param fiat: fiat code eg. USD, EUR
     :return: returns html of the webpage having historical data of cryptocurrency for certain duration
     """
 
@@ -93,8 +94,8 @@ def download_coin_data(coin_code, start_date, end_date):
         .timestamp()
     )
 
-    api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/ohlcv/historical?convert=USD&slug={}&time_end={}&time_start={}".format(
-        coin_id, end_date_timestamp, start_date_timestamp
+    api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/ohlcv/historical?convert={}&slug={}&time_end={}&time_start={}".format(
+        fiat,coin_id, end_date_timestamp, start_date_timestamp
     )
 
     try:
