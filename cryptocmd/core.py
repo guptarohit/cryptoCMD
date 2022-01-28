@@ -188,7 +188,7 @@ class CmcScraper(object):
             csv_path = os.getcwd()
 
         if csv_name is None:
-            # Make name fo file in format of {coin_code}_{start_date}_{end_date}.csv
+            # Make name fo file in format of {coin_code}_{fiat}_{start_date}_{end_date}.csv
             csv_name = "{0}_{1}_{2}_{3}.csv".format(
                 self.coin_code, self.fiat,self.start_date, self.end_date
             )
