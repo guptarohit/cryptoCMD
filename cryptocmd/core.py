@@ -31,6 +31,7 @@ class CmcScraper(object):
         end_date=None,
         all_time=False,
         order_ascending=False,
+        fiat="USD",
     ):
         """
         :param coin_code: coin code of cryptocurrency e.g. btc
@@ -38,6 +39,7 @@ class CmcScraper(object):
         :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
         :param all_time: 'True' if need data of all time for respective cryptocurrency
         :param order_ascending: data ordered by 'Date' in ascending order (i.e. oldest first).
+        :param fiat: fiat code eg. USD, EUR
 
         """
 
@@ -46,6 +48,7 @@ class CmcScraper(object):
         self.end_date = end_date
         self.all_time = bool(all_time)
         self.order_ascending = order_ascending
+        self.fiat = fiat
         self.headers = ["Date", "Open", "High", "Low", "Close", "Volume", "Market Cap"]
         self.rows = []
 
@@ -80,7 +83,9 @@ class CmcScraper(object):
         if self.all_time:
             self.start_date, self.end_date = None, None
 
-        coin_data = download_coin_data(self.coin_code, self.start_date, self.end_date)
+        coin_data = download_coin_data(
+            self.coin_code, self.start_date, self.end_date, self.fiat
+        )
 
         for _row in coin_data["data"]["quotes"]:
 
@@ -185,9 +190,9 @@ class CmcScraper(object):
             csv_path = os.getcwd()
 
         if csv_name is None:
-            # Make name fo file in format of {coin_code}_{start_date}_{end_date}.csv
-            csv_name = "{0}_{1}_{2}.csv".format(
-                self.coin_code, self.start_date, self.end_date
+            # Make name fo file in format of {coin_code}_{fiat}_{start_date}_{end_date}.csv
+            csv_name = "{0}_{1}_{2}_{3}.csv".format(
+                self.coin_code, self.fiat, self.start_date, self.end_date
             )
 
         if not csv_name.endswith(".csv"):
@@ -224,8 +229,10 @@ class CmcScraper(object):
             path = os.getcwd()
 
         if name is None:
-            # Make name of file in format: {coin_code}_{start_date}_{end_date}.csv
-            name = "{0}_{1}_{2}".format(self.coin_code, self.start_date, self.end_date)
+            # Make name of file in format: {coin_code}_{fiat}_{start_date}_{end_date}.csv
+            name = "{0}_{1}-{2}_{3}".format(
+                self.coin_code, self.fiat, self.start_date, self.end_date
+            )
 
         if not name.endswith(".{}".format(format)):
             name += ".{}".format(format)
