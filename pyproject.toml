@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cryptocmd"
-version = "0.6.0"
+version = "0.6.1"
 description = "Cryptocurrency historical market price data scrapper."
 authors = ["Rohit Gupta <rohitgtech+git@gmail.com>"]
 license = "BSD-3-Clause"
