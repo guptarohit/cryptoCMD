@@ -21,12 +21,11 @@ jobs:
       - name: build
         run: |
           poetry build
-      - name: Publish package to TestPyPI
+      - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
-          password: "${{ secrets.TEST_PYPI_API_TOKEN }}"
-          repository_url: "https://test.pypi.org/legacy/"
+          password: "${{ secrets.PYPI_API_TOKEN }}"
       - name: Create Release
         uses: actions/create-release@main
         env:
