@@ -6,18 +6,11 @@ cryptoCMD: cryptoCurrency Market Data
 .. image:: https://img.shields.io/pypi/v/cryptoCMD.svg
     :target: https://pypi.python.org/pypi/cryptoCMD
 
-.. image:: https://travis-ci.org/guptarohit/cryptoCMD.svg?branch=master
-    :target: https://travis-ci.org/guptarohit/cryptoCMD
-    
-.. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD.svg?type=shield
-    :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD?ref=badge_shield
-    :alt: FOSSA Status
+.. image:: https://github.com/guptarohit/cryptoCMD/actions/workflows/ci.yml/badge.svg
+    :target: https://github.com/guptarohit/cryptoCMD/actions/workflows/ci.yml
 
 .. image:: https://img.shields.io/pypi/l/cryptoCMD.svg
     :target: https://github.com/guptarohit/cryptoCMD/blob/master/LICENSE
-
-.. image:: https://img.shields.io/pypi/pyversions/cryptoCMD.svg
-    :target: https://pypi.python.org/pypi/cryptoCMD
 
 .. image:: https://pepy.tech/badge/cryptoCMD
     :target: https://pepy.tech/project/cryptoCMD
@@ -121,11 +114,3 @@ If you found this useful, I'd appreciate your consideration in the below. ✨☕
 .. image:: https://user-images.githubusercontent.com/7895001/52529390-e8379d00-2d16-11e9-913b-4d09db90403f.png
     :target: https://www.patreon.com/bePatron?u=14009502
     :alt: Become a Patron!
-
-
-License
--------
-
-.. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD.svg?type=large
-    :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fguptarohit%2FcryptoCMD?ref=badge_large
-    :alt: FOSSA Status
