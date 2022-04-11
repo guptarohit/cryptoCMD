@@ -32,6 +32,7 @@ class CmcScraper(object):
         all_time=False,
         order_ascending=False,
         fiat="USD",
+        id_number = None,
     ):
         """
         :param coin_code: coin code of cryptocurrency e.g. btc
@@ -40,6 +41,7 @@ class CmcScraper(object):
         :param all_time: 'True' if need data of all time for respective cryptocurrency
         :param order_ascending: data ordered by 'Date' in ascending order (i.e. oldest first).
         :param fiat: fiat code eg. USD, EUR
+        :param id_number: id number for the a cryptocurrency on the coinmarketcap.com. Will override coin_code
 
         """
 
@@ -51,6 +53,7 @@ class CmcScraper(object):
         self.fiat = fiat
         self.headers = ["Date", "Open", "High", "Low", "Close", "Volume", "Market Cap"]
         self.rows = []
+        self.id_number = id_number
 
         # enable all_time download if start_time or end_time is not given
         if not (self.start_date and self.end_date):
@@ -84,7 +87,7 @@ class CmcScraper(object):
             self.start_date, self.end_date = None, None
 
         coin_data = download_coin_data(
-            self.coin_code, self.start_date, self.end_date, self.fiat
+            self.coin_code, self.start_date, self.end_date, self.fiat, self.id_number
         )
 
         for _row in coin_data["data"]["quotes"]:

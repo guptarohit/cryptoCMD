@@ -57,7 +57,7 @@ def get_coin_id(coin_code):
             print("Error message:", e)
 
 
-def download_coin_data(coin_code, start_date, end_date, fiat):
+def download_coin_data(coin_code, start_date, end_date, fiat, id_number=None):
     """
     Download HTML price history for the specified cryptocurrency and time range from CoinMarketCap.
 
@@ -65,6 +65,7 @@ def download_coin_data(coin_code, start_date, end_date, fiat):
     :param start_date: date since when to scrape data (in the format of dd-mm-yyyy)
     :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
     :param fiat: fiat code eg. USD, EUR
+    :param id_number: id number for the token on coinmarketcap. Will override coin_code.
     :return: returns html of the webpage having historical data of cryptocurrency for certain duration
     """
 
@@ -76,7 +77,8 @@ def download_coin_data(coin_code, start_date, end_date, fiat):
         yesterday = datetime.date.today() - datetime.timedelta(1)
         end_date = yesterday.strftime("%d-%m-%Y")
 
-    coin_id = get_coin_id(coin_code)
+    if not id_number:
+        coin_id = get_coin_id(coin_code)
 
     # convert the dates to timestamp for the url
     start_date_timestamp = int(
@@ -94,9 +96,14 @@ def download_coin_data(coin_code, start_date, end_date, fiat):
         .timestamp()
     )
 
-    api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/ohlcv/historical?convert={}&slug={}&time_end={}&time_start={}".format(
-        fiat, coin_id, end_date_timestamp, start_date_timestamp
-    )
+    if id_number:
+        api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/ohlcv/historical?convert={}&id={}&time_end={}&time_start={}".format(
+            fiat, id_number, end_date_timestamp, start_date_timestamp
+        )
+    else:
+        api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/ohlcv/historical?convert={}&slug={}&time_end={}&time_start={}".format(
+            fiat, coin_id, end_date_timestamp, start_date_timestamp
+        )
 
     try:
         json_data = get_url_data(api_url).json()
