@@ -31,7 +31,7 @@ requests = "*"
 tablib = "*"
 
 [tool.poetry.dev-dependencies]
-black = "^22.1.0"
+black = "^22.8.0"
 
 [build-system]
 requires = ["poetry>=0.12"]
