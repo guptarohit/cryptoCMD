@@ -14,7 +14,6 @@ classifiers = [
     "Topic :: Utilities",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -27,12 +26,12 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
+python = "^3.7"
 requests = "*"
 tablib = "*"
 
 [tool.poetry.dev-dependencies]
-black = "^22.8.0"
+black = "^23.3"
 
 [build-system]
 requires = ["poetry>=0.12"]
