@@ -17,6 +17,7 @@ jobs:
           - '3.8'
           - '3.9'
           - '3.10'
+          - '3.11'
           - 3.x
         os:
           - ubuntu-latest
@@ -27,18 +28,18 @@ jobs:
         install-via:
           - pip
         include:
-          - python-version: 3.9
+          - python-version: 3.11
             os: windows-latest
             arch: x86
             install-via: pip
-          - python-version: 3.9
+          - python-version: 3.11
             os: ubuntu-latest
             arch: x64
             install-via: script
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: 'Set up Python ${{ matrix.python-version }}'
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '${{ matrix.python-version }}'
           architecture: '${{ matrix.arch }}'
