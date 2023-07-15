@@ -71,6 +71,28 @@ To get all time historical data of a cryptocurrency
     # Pandas dataFrame for the same data
     df = scraper.get_dataframe()
 
+To get data of a cryptocurrency which have same coin code as others
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    from cryptocmd import CmcScraper
+
+    # initialise scraper with coin name as well
+    scraper = CmcScraper(coin_code="sol", coin_name="solana")
+
+    # get raw data as list of list
+    headers, data = scraper.get_data()
+
+    # get data in a json format
+    solana_json_data = scraper.get_data("json")
+
+    # export the data as csv file, you can also pass optional `name` parameter
+    scraper.export("csv", name="solana_all_time")
+
+    # Pandas dataFrame for the same data
+    df = scraper.get_dataframe()
+
 To get data of a cryptocurrency for some days
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

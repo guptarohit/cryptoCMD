@@ -46,4 +46,4 @@ jobs:
       - name: Install package
         run: python setup.py install
       - name: Run test script
-        run: python examples/get_csv.py
+        run: python examples/get_csv.py && python examples/get_by_coin_name.py
