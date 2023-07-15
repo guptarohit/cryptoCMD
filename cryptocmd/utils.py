@@ -26,10 +26,11 @@ def get_url_data(url):
         raise e
 
 
-def get_coin_id(coin_code):
+def get_coin_id(coin_code, coin_name):
     """
     This method fetches the name(id) of currency from the given code
     :param coin_code: coin code of a cryptocurrency e.g. btc
+    :param coin_name: coin name in case of many coins with same code e.g. sol -> solana, solcoin
     :return: coin-id for the a cryptocurrency on the coinmarketcap.com
     """
 
@@ -41,7 +42,10 @@ def get_coin_id(coin_code):
         json_data = get_url_data(api_url).json()
         error_code = json_data["status"]["error_code"]
         if error_code == 0:
-            return json_data["data"][0]["slug"]
+            if coin_name is None:
+                return json_data["data"][0]["slug"]
+
+            return [data["slug"] for data in json_data["data"] if data["name"].lower() == coin_name.lower()][0]
         if error_code == 400:
             raise InvalidCoinCode(
                 "'{}' coin code is unavailable on coinmarketcap.com".format(coin_code)
@@ -57,7 +61,7 @@ def get_coin_id(coin_code):
             print("Error message:", e)
 
 
-def download_coin_data(coin_code, start_date, end_date, fiat):
+def download_coin_data(coin_code, start_date, end_date, fiat, coin_name):
     """
     Download HTML price history for the specified cryptocurrency and time range from CoinMarketCap.
 
@@ -65,6 +69,7 @@ def download_coin_data(coin_code, start_date, end_date, fiat):
     :param start_date: date since when to scrape data (in the format of dd-mm-yyyy)
     :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
     :param fiat: fiat code eg. USD, EUR
+    :param coin_name: coin name in case of many coins with same code e.g. sol -> solana, solcoin
     :return: returns html of the webpage having historical data of cryptocurrency for certain duration
     """
 
@@ -76,7 +81,7 @@ def download_coin_data(coin_code, start_date, end_date, fiat):
         yesterday = datetime.date.today() - datetime.timedelta(1)
         end_date = yesterday.strftime("%d-%m-%Y")
 
-    coin_id = get_coin_id(coin_code)
+    coin_id = get_coin_id(coin_code, coin_name)
 
     # convert the dates to timestamp for the url
     start_date_timestamp = int(
