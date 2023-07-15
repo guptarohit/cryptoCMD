@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.2] - 2023-07-15
+
+### Added
+
+- option `coin_name` for getting data of coin which have conflicting coin code #62
+
 ## [0.6.1] - 2022-02-20
 
 ### Added
