@@ -71,6 +71,7 @@ def download_coin_data(coin_code, start_date, end_date, fiat, coin_name, id_numb
     :param fiat: fiat code eg. USD, EUR
     :param coin_name: coin name in case of many coins with same code e.g. sol -> solana, solcoin
     :param id_number: id number for the token on coinmarketcap. Will override coin_code and coin_name when provided.
+
     :return: returns html of the webpage having historical data of cryptocurrency for certain duration
     """
 
