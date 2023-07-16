@@ -8,9 +8,9 @@ jobs:
     name: release-pypi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
       - name: Install dependencies
@@ -29,7 +29,7 @@ jobs:
       - name: Create Release
         uses: actions/create-release@main
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.GH_PAT }}"
         with:
           tag_name: "${{ github.ref }}"
           release_name: "v${{ github.ref }}"

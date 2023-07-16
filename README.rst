@@ -20,6 +20,10 @@ cryptoCMD: cryptoCurrency Market Data
     :target: https://github.com/ambv/black
     :alt: Code style: black
 
+.. image:: https://img.shields.io/github/sponsors/guptarohit?color=%23FF5733
+    :target: https://github.com/sponsors/guptarohit
+    :alt: GitHub Sponsors
+
 Cryptocurrency historical market price data scraper written in Python.
 
 
@@ -67,6 +71,28 @@ To get all time historical data of a cryptocurrency
     # Pandas dataFrame for the same data
     df = scraper.get_dataframe()
 
+To get data of a cryptocurrency which have same coin code as others
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    from cryptocmd import CmcScraper
+
+    # initialise scraper with coin name as well
+    scraper = CmcScraper(coin_code="sol", coin_name="solana")
+
+    # get raw data as list of list
+    headers, data = scraper.get_data()
+
+    # get data in a json format
+    solana_json_data = scraper.get_data("json")
+
+    # export the data as csv file, you can also pass optional `name` parameter
+    scraper.export("csv", name="solana_all_time")
+
+    # Pandas dataFrame for the same data
+    df = scraper.get_dataframe()
+
 To get data of a cryptocurrency for some days
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -107,10 +133,6 @@ Feel free to make a pull request! :octocat:
 
 If you found this useful, I'd appreciate your consideration in the below. ✨☕
 
-.. image:: https://user-images.githubusercontent.com/7895001/52529389-e2da5280-2d16-11e9-924c-4fe3f309c780.png
+.. image:: https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=rohitgupta&button_colour=5F7FFF&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00
     :target: https://www.buymeacoffee.com/rohitgupta
     :alt: Buy Me A Coffee
-
-.. image:: https://user-images.githubusercontent.com/7895001/52529390-e8379d00-2d16-11e9-913b-4d09db90403f.png
-    :target: https://www.patreon.com/bePatron?u=14009502
-    :alt: Become a Patron!
