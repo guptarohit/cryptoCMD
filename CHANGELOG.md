@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.3] - 2023-07-22
+
+### Added
+
+- option `id_number` for getting data of a coin (useful for case when coin have conflicting coin code) #51
+
 ## [0.6.2] - 2023-07-15
 
 ### Added
