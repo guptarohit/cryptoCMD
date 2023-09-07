@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.4] - 2023-10-14
+
+### Added
+
+- In addition to Date, Open, High, Low, Close, Volume, Market Cap, the following time columns are returned: Time Open, Time High, Time Low, Time Close.
+
 ## [0.6.3] - 2023-07-22
 
 ### Added
