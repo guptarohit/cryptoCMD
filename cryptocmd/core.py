@@ -54,7 +54,7 @@ class CmcScraper(object):
         self.order_ascending = order_ascending
         self.fiat = fiat
         self.coin_name = coin_name
-        self.headers = ["Date", "Open", "High", "Low", "Close", "Volume", "Market Cap"]
+        self.headers = ["Date", "Open", "High", "Low", "Close", "Volume", "Market Cap", "Time Open", "Time High", "Time Low", "Time Close"]
         self.rows = []
         self.id_number = id_number
 
@@ -108,6 +108,10 @@ class CmcScraper(object):
                 _row_quote["close"],
                 _row_quote["volume"],
                 _row_quote["market_cap"],
+                _row["time_open"],
+                _row["time_high"],
+                _row["time_low"],
+                _row["time_close"],
             ]
 
             self.rows.insert(0, row)

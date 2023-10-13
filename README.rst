@@ -118,7 +118,7 @@ To get data of a cryptocurrency for some days
 
 Following are the columns of the data
 """""""""""""""""""""""""""""""""""""
-``Date, Open, High, Low, Close, Volume, Market Cap``
+``Date, Open, High, Low, Close, Volume, Market Cap, Time Open, Time High, Time Low, Time Close``
 
 
 Acknowledgements
