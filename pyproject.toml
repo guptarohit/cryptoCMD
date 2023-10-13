@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cryptocmd"
-version = "0.6.3"
+version = "0.6.4"
 description = "Cryptocurrency historical market price data scrapper."
 authors = ["Rohit Gupta <rohitgtech+git@gmail.com>"]
 license = "BSD-3-Clause"
@@ -19,6 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: BSD License",
 ]
 include = [
