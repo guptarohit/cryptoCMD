@@ -1,5 +1,6 @@
-include README.rst
+include README.md
 include LICENSE
-include requirements.txt
+include pyproject.toml
+include poetry.lock
 
 global-exclude *.py[cdo] __pycache__ *.so *.pyd
