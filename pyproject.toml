@@ -9,6 +9,12 @@ homepage = "https://github.com/guptarohit/cryptoCMD"
 repository = "https://github.com/guptarohit/cryptoCMD"
 keywords = ["cryptocurrency", "cryptocurrency historical data", "coinmarketcap", "dataset", "historical cryptocurrency prices"]
 
+[project.urls]
+homepage = "https://github.com/guptarohit/cryptoCMD/"
+source = "https://github.com/guptarohit/cryptoCMD/"
+issues = "https://github.com/guptarohit/cryptoCMD/issues"
+changelog = "https://github.com/guptarohit/cryptoCMD/blob/master/CHANGELOG.md"
+
 classifiers = [
     "Development Status :: 4 - Beta",
     "Topic :: Utilities",
@@ -21,12 +27,14 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: BSD License",
 ]
+
 include = [
     "LICENSE",
+    "README.md",
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8,<4.0"
 requests = "*"
 tablib = "*"
 setuptools = { version = "*", python = ">=3.12" }
@@ -35,7 +43,7 @@ setuptools = { version = "*", python = ">=3.12" }
 ruff = "^0.3.5"
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["poetry-core", "setuptools>=61.0.0"]
 build-backend = "poetry.masonry.api"
 
 [tool.ruff]
