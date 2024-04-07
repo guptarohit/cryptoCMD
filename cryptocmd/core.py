@@ -33,7 +33,7 @@ class CmcScraper(object):
         order_ascending=False,
         fiat="USD",
         coin_name=None,
-        id_number=None
+        id_number=None,
     ):
         """
         :param coin_code: coin code of cryptocurrency e.g. btc. Will be ignored if using id_number.
@@ -43,7 +43,7 @@ class CmcScraper(object):
         :param order_ascending: data ordered by 'Date' in ascending order (i.e. oldest first).
         :param fiat: fiat code eg. USD, EUR
         :param coin_name: coin name in case of many coins with same code e.g. sol -> solana, solcoin
-        :param id_number: id number for the a cryptocurrency on the coinmarketcap.com. 
+        :param id_number: id number for the a cryptocurrency on the coinmarketcap.com.
             Will override coin_code and coin_name when provided.
         """
 
@@ -54,7 +54,19 @@ class CmcScraper(object):
         self.order_ascending = order_ascending
         self.fiat = fiat
         self.coin_name = coin_name
-        self.headers = ["Date", "Open", "High", "Low", "Close", "Volume", "Market Cap", "Time Open", "Time High", "Time Low", "Time Close"]
+        self.headers = [
+            "Date",
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume",
+            "Market Cap",
+            "Time Open",
+            "Time High",
+            "Time Low",
+            "Time Close",
+        ]
         self.rows = []
         self.id_number = id_number
 
@@ -90,11 +102,15 @@ class CmcScraper(object):
             self.start_date, self.end_date = None, None
 
         coin_data = download_coin_data(
-            self.coin_code, self.start_date, self.end_date, self.fiat, self.coin_name, self.id_number
+            self.coin_code,
+            self.start_date,
+            self.end_date,
+            self.fiat,
+            self.coin_name,
+            self.id_number,
         )
 
         for _row in coin_data["data"]["quotes"]:
-
             _row_quote = list(_row["quote"].values())[0]
             date = datetime.strptime(
                 _row_quote["timestamp"], "%Y-%m-%dT%H:%M:%S.%fZ"
@@ -251,7 +267,7 @@ class CmcScraper(object):
 
         try:
             with open(_file, "wb") as f:
-                if type(data) is str:
+                if isinstance(data, str):
                     f.write(data.encode("utf-8"))
                 else:
                     f.write(data)

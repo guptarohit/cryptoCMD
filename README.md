@@ -1,6 +1,6 @@
 # cryptoCMD: cryptoCurrency Market Data
 
-[![PyPI Version][]][1] [![CI Status][]][2] [![License][]][3] [![Downloads][]][4] [![Code style: black][]][5] [![GitHub Sponsors][]][6]
+[![PyPI Version][]][1] [![CI Status][]][2] [![License][]][3] [![Downloads][]][4] [![Ruff][]][5] [![GitHub Sponsors][]][6]
 
 
 Cryptocurrency historical market price data scraper written in Python.
@@ -113,8 +113,8 @@ below. ✨☕
 [3]: https://github.com/guptarohit/cryptoCMD/blob/master/LICENSE
 [Downloads]: https://pepy.tech/badge/cryptoCMD
 [4]: https://pepy.tech/project/cryptoCMD
-[Code style: black]: https://img.shields.io/badge/code%20style-black-000000.svg
-[5]: https://github.com/ambv/black
+[Ruff]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
+[5]: https://github.com/astral-sh/ruff
 [GitHub Sponsors]: https://img.shields.io/github/sponsors/guptarohit?color=%23FF5733
 [6]: https://github.com/sponsors/guptarohit
 [![Buy Me A Coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=rohitgupta&button_colour=5F7FFF&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00)](https://www.buymeacoffee.com/rohitgupta)

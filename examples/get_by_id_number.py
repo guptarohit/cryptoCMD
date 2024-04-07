@@ -4,10 +4,10 @@
 from cryptocmd import CmcScraper
 
 # Initialise scraper with 'id_number' of cryptocurrency.
-# 'id_number' is unique for each cryptocurrency, 
+# 'id_number' is unique for each cryptocurrency,
 #   making it safer to retrieve data from tokens with duplicate names.
 # 'id_number will override 'coin_code' and 'coin_name' when provided,
-#   a WARNING will be printed if 'id_number' is provided 
+#   a WARNING will be printed if 'id_number' is provided
 #   and 'coin_code' or 'coin_name' provided are different from the coin returned.
 # If time interval is not passed all time data will be scrapped
 # 'id_number' can be retrieved from https://web-api.coinmarketcap.com/v1/cryptocurrency/map?symbol={SYMBOL}.
