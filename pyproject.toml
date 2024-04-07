@@ -30,9 +30,18 @@ python = "^3.8"
 requests = "*"
 tablib = "*"
 
-[tool.poetry.dev-dependencies]
-black = "^23.3"
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.3.5"
 
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.ruff]
+line-length=88
+
+[tool.ruff.lint.mccabe]
+max-complexity = 18
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true

@@ -45,7 +45,11 @@ def get_coin_id(coin_code, coin_name):
             if coin_name is None:
                 return json_data["data"][0]["slug"]
 
-            return [data["slug"] for data in json_data["data"] if data["name"].lower() == coin_name.lower()][0]
+            return [
+                data["slug"]
+                for data in json_data["data"]
+                if data["name"].lower() == coin_name.lower()
+            ][0]
         if error_code == 400:
             raise InvalidCoinCode(
                 "'{}' coin code is unavailable on coinmarketcap.com".format(coin_code)
@@ -61,7 +65,9 @@ def get_coin_id(coin_code, coin_name):
             print("Error message:", e)
 
 
-def download_coin_data(coin_code, start_date, end_date, fiat, coin_name, id_number=None):
+def download_coin_data(
+    coin_code, start_date, end_date, fiat, coin_name, id_number=None
+):
     """
     Download HTML price history for the specified cryptocurrency and time range from CoinMarketCap.
 
@@ -117,25 +123,32 @@ def download_coin_data(coin_code, start_date, end_date, fiat, coin_name, id_numb
             raise Exception(json_data["status"]["error_message"])
         if id_number:
             show_coin_info = False
-            if coin_code and coin_code != json_data['data']['symbol']:
-                print(f"INFO: Using 'id_number'! The 'coin_code' ({coin_code}) provided " + \
-                      "is different from the symbol returned.")
+            if coin_code and coin_code != json_data["data"]["symbol"]:
+                print(
+                    f"INFO: Using 'id_number'! The 'coin_code' ({coin_code}) provided "
+                    + "is different from the symbol returned."
+                )
                 show_coin_info = True
-            if coin_name and coin_name != json_data['data']['name']:
-                print(f"INFO: Using 'id_number'! The 'coin_name' ({coin_name}) provided " + \
-                      "is different from the symbol returned.")
+            if coin_name and coin_name != json_data["data"]["name"]:
+                print(
+                    f"INFO: Using 'id_number'! The 'coin_name' ({coin_name}) provided "
+                    + "is different from the symbol returned."
+                )
                 show_coin_info = True
             if show_coin_info:
-                print(f"""The returned data belongs to coin "{json_data['data']['name']}", """ + \
-                        f"""with symbol "{json_data['data']['symbol']}" """)
+                print(
+                    f"""The returned data belongs to coin "{json_data['data']['name']}", """
+                    + f"""with symbol "{json_data['data']['symbol']}" """
+                )
         return json_data
     except Exception as e:
         print(
             "Error fetching price data for {} for interval '{}' and '{}'".format(
-            f"(id {id_number})" if id_number else coin_code,
-            start_date,
-            end_date,
-        ))
+                f"(id {id_number})" if id_number else coin_code,
+                start_date,
+                end_date,
+            )
+        )
 
         if hasattr(e, "message"):
             print("Error message (download_data) :", e.message)

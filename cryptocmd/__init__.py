@@ -1,2 +1,2 @@
-from .core import *
-from .__version__ import __version__
+from .core import *  # noqa
+from .__version__ import __version__  # noqa
