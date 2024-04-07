@@ -64,7 +64,7 @@ setup(
     author=AUTHOR,
     url=URL,
     packages=find_packages(exclude=("tests",)),
-    install_requires=["requests", "tablib"],
+    install_requires=["requests", "tablib", "setuptools; python_version >= '3.12'"],
     include_package_data=True,
     extras_require={"pandas": ["pandas"]},
     license="BSD",
