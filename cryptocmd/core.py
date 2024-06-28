@@ -36,17 +36,23 @@ class CmcScraper(object):
         id_number=None,
     ):
         """
-        :param coin_code: coin code of cryptocurrency e.g. btc. Will be ignored if using id_number.
-        :param start_date: date since when to scrape data (in the format of dd-mm-yyyy)
-        :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
-        :param all_time: 'True' if need data of all time for respective cryptocurrency
-        :param order_ascending: data ordered by 'Date' in ascending order (i.e. oldest first).
-        :param fiat: fiat code eg. USD, EUR
-        :param coin_name: coin name in case of many coins with same code e.g. sol -> solana, solcoin
-        :param id_number: id number for the a cryptocurrency on the coinmarketcap.com.
-            Will override coin_code and coin_name when provided.
+        Initialize the CmcScraper object.
+
+        Args:
+            coin_code (str): Coin code of the cryptocurrency (e.g. btc).
+                Will be ignored if using id_number.
+            start_date (str): Date since when to scrape data (in the format of dd-mm-yyyy).
+            end_date (str): Date to which scrape the data (in the format of dd-mm-yyyy).
+            all_time (bool): If True, download data for all time for the respective cryptocurrency.
+            order_ascending (bool): If True, data is ordered by 'Date' in ascending order (oldest first).
+            fiat (str): Fiat code (e.g. USD, EUR).
+            coin_name (str): Coin name in case of multiple coins with the same code
+                (e.g. sol -> solana, solcoin).
+            id_number (int): ID number for the cryptocurrency on the CoinMarketCap website.
+                Overrides coin_code and coin_name when provided.
         """
 
+        # Initialize attributes
         self.coin_code = coin_code
         self.start_date = start_date
         self.end_date = end_date
@@ -70,18 +76,31 @@ class CmcScraper(object):
         self.rows = []
         self.id_number = id_number
 
-        # enable all_time download if start_time or end_time is not given
+        # Enable all_time download if start_time or end_time is not given
         if not (self.start_date and self.end_date):
             self.all_time = True
 
+        # Raise error if neither all_time nor start_date and end_date are given
         if not (self.all_time or (self.start_date and self.end_date)):
             raise InvalidParameters(
                 "'start_date' or 'end_date' cannot be empty if 'all_time' flag is False"
             )
 
     def __repr__(self):
+        """
+        Return string representation of the object.
+        
+        Returns:
+            str: String representation of the object.
+        """
+        
+        # Format the string with the object's attributes
         return (
-            "<CmcScraper coin_code:{}, start_date:{}, end_date:{}, all_time:{}>".format(
+            "<CmcScraper "
+            "coin_code:{}, "
+            "start_date:{}, "
+            "end_date:{}, "
+            "all_time:{}>".format(
                 self.coin_code, self.start_date, self.end_date, self.all_time
             )
         )
