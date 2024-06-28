@@ -241,6 +241,7 @@ class CmcScraper(object):
     def export(self, format, name=None, path=None, **kwargs):
         """
         Exports the data to specified file format
+
         :param format: extension name of file format. Available: json, xls, yaml, csv, dbf, tsv, html, latex, xlsx, ods
         :param name: (optional) name of file.
         :param path: (optional) output file path.
@@ -248,6 +249,7 @@ class CmcScraper(object):
         :return:
         """
 
+        # Get the data in the specified format
         data = self.get_data(format, **kwargs)
 
         if path is None:
@@ -261,18 +263,23 @@ class CmcScraper(object):
             )
 
         if not name.endswith(".{}".format(format)):
+            # Add the file extension if not provided
             name += ".{}".format(format)
 
         _file = "{0}/{1}".format(path, name)
 
         try:
+            # Write the data to the file
             with open(_file, "wb") as f:
                 if isinstance(data, str):
+                    # If data is a string, encode it to bytes
                     f.write(data.encode("utf-8"))
                 else:
+                    # If data is not a string, simply write it to the file
                     f.write(data)
         except IOError as err:
             errno, strerror = err.args
             print("I/O error({0}): {1}".format(errno, strerror))
         except Exception as err:
+            # Catch any other exception and print the format and error message
             print("format: {0}, Error: {1}".format(format, err))
