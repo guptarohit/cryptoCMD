@@ -196,35 +196,38 @@ class CmcScraper(object):
     def get_dataframe(self, date_as_index=False, **kwargs):
         """
         This gives scraped data as DataFrame.
-        :param date_as_index: make 'Date' as index and remove 'Date' column.
-        :param kwargs: Optional arguments that data downloader takes.
+
+        :param date_as_index: (optional) make 'Date' as index and remove 'Date' column. Default is False.
+        :param kwargs: (optional) Optional arguments that data downloader takes.
         :return: DataFrame of the downloaded data.
         """
 
-        try:
-            import pandas as pd
-        except ImportError:
-            pd = None
+        # Import pandas library
+        import pandas as pd
 
+        # Check if pandas is installed
         if pd is None:
             raise NotImplementedError(
                 "DataFrame Format requires 'pandas' to be installed."
                 "Try : pip install pandas"
             )
 
+        # Download the data
         self._download_data(**kwargs)
 
+        # Create a DataFrame from the downloaded data
         dataframe = pd.DataFrame(data=self.rows, columns=self.headers)
 
-        # convert 'Date' column to datetime type
+        # Convert 'Date' column to datetime type
         dataframe["Date"] = pd.to_datetime(
             dataframe["Date"], format="%d-%m-%Y", dayfirst=True
         )
 
+        # If date_as_index is True, set 'Date' column as index and drop the 'Date' column
         if date_as_index:
-            # set 'Date' column as index and drop the the 'Date' column.
             dataframe.set_index("Date", inplace=True)
 
+        # Return the DataFrame
         return dataframe
 
     def export_csv(self, csv_name=None, csv_path=None, **kwargs):
