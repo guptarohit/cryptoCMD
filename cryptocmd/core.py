@@ -159,24 +159,37 @@ class CmcScraper(object):
     def get_data(self, format="", verbose=False, **kwargs):
         """
         This method returns the downloaded data in specified format.
-        :param format: extension name of data format. Available: json, xls, yaml, csv, dbf, tsv, html, latex, xlsx, ods
+
+        :param format: Extension name of data format. Available: json, xls, yaml, csv, dbf, tsv, html, latex, xlsx, ods.
         :param verbose: (optional) Flag to enable verbose only.
         :param kwargs: Optional arguments that data downloader takes.
-        :return:
+        :return: Data in specified format, or if format is not specified, returns headers and rows.
         """
 
+        # Download the data
         self._download_data(**kwargs)
+
+        # If verbose flag is set, print the data
         if verbose:
+            # Print the headers
             print(*self.headers, sep=", ")
 
+            # Print each row of data
             for row in self.rows:
                 print(*row, sep=", ")
+        # If format is specified, export the data in that format
         elif format:
+            # Create a new tablib Dataset and add headers
             data = tablib.Dataset()
             data.headers = self.headers
+
+            # Add each row of data to the Dataset
             for row in self.rows:
                 data.append(row)
+
+            # Export the Dataset in the specified format and return it
             return data.export(format)
+        # If no format is specified, return the headers and rows
         else:
             return self.headers, self.rows
 
