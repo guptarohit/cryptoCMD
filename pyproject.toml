@@ -23,6 +23,7 @@ classifiers = [
 ]
 include = [
     "LICENSE",
+    "cryptocmd/fiat_ids.json",
 ]
 
 [tool.poetry.dependencies]
