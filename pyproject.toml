@@ -1,47 +1,59 @@
-[tool.poetry]
+[project]
 name = "cryptocmd"
 version = "0.6.4"
 description = "Cryptocurrency historical market price data scrapper."
-authors = ["Rohit Gupta <rohitgtech+git@gmail.com>"]
-license = "BSD-3-Clause"
+authors = [{ name = "Rohit Gupta", email = "rohitgtech+git@gmail.com" }]
+license = { text = "BSD-3-Clause" }
 readme = "README.md"
-homepage = "https://github.com/guptarohit/cryptoCMD"
-repository = "https://github.com/guptarohit/cryptoCMD"
+requires-python = ">=3.9"
 keywords = ["cryptocurrency", "cryptocurrency historical data", "coinmarketcap", "dataset", "historical cryptocurrency prices"]
-
 classifiers = [
     "Development Status :: 4 - Beta",
     "Topic :: Utilities",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "License :: OSI Approved :: BSD License",
 ]
-include = [
-    "LICENSE",
-    "cryptocmd/fiat_ids.json",
+dependencies = [
+    "requests",
+    "tablib",
+    "setuptools; python_version >= '3.12'",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-requests = "*"
-tablib = "*"
-setuptools = { version = "*", python = ">=3.12" }
+[project.optional-dependencies]
+pandas = ["pandas"]
 
-[tool.poetry.group.dev.dependencies]
-ruff = ">=0.3.5,<0.5.0"
-pre-commit = { version = "*", python = ">=3.9" }
+[project.urls]
+Homepage = "https://github.com/guptarohit/cryptoCMD"
+Repository = "https://github.com/guptarohit/cryptoCMD"
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.3.5,<0.5.0",
+    "pre-commit",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["cryptocmd"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "cryptocmd/",
+    "LICENSE",
+    "README.md",
+]
 
 [tool.ruff]
-line-length=88
+line-length = 88
 
 [tool.ruff.lint.mccabe]
 max-complexity = 18
