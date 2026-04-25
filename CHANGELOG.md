@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.5](https://github.com/guptarohit/cryptoCMD/compare/v0.6.4...v0.6.5) (2026-04-25)
+
+
+### Fixed
+
+* Adding setuptools to dependencies for Python 3.12 and above ([dfcbd95](https://github.com/guptarohit/cryptoCMD/commit/dfcbd9559fd8e380dfcdd5fc08e00852c01cebf7))
+
 ## [0.6.4] - 2023-10-14
 
 ### Added
