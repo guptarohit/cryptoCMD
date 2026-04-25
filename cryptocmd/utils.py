@@ -8,6 +8,22 @@ import datetime
 from requests import get
 
 
+_CMC_DATA_API = "https://api.coinmarketcap.com/data-api/v3"
+
+_FIAT_IDS = {
+    "USD": 2781,
+    "EUR": 2790,
+    "GBP": 2791,
+    "JPY": 2797,
+    "AUD": 2782,
+    "CAD": 2784,
+    "CHF": 2785,
+    "CNY": 2787,
+}
+
+_HEADERS = {"User-Agent": "Mozilla/5.0"}
+
+
 def get_url_data(url):
     """
     This method downloads the data of the web page.
@@ -16,60 +32,59 @@ def get_url_data(url):
     """
 
     try:
-        response = get(url)
+        response = get(url, headers=_HEADERS)
         return response
     except Exception as e:
-        if hasattr(e, "message"):
-            print("Error message (get_url_data) :", e.message)
-        else:
-            print("Error message (get_url_data) :", e)
+        print("Error message (get_url_data) :", e)
         raise e
 
 
 def get_coin_id(coin_code, coin_name):
     """
-    This method fetches the name(id) of currency from the given code
+    This method fetches the id of currency from the given code
     :param coin_code: coin code of a cryptocurrency e.g. btc
     :param coin_name: coin name in case of many coins with same code e.g. sol -> solana, solcoin
-    :return: coin-id for the a cryptocurrency on the coinmarketcap.com
+    :return: numeric coin id for the cryptocurrency on coinmarketcap.com
     """
 
-    api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/map?symbol={coin_code}".format(
-        coin_code=coin_code
-    )
+    api_url = (
+        "{}/cryptocurrency/listing?start=1&limit=5000"
+        "&sortBy=market_cap&sortType=desc&convert=USD"
+        "&cryptoType=all&tagType=all&audited=false"
+    ).format(_CMC_DATA_API)
 
     try:
         json_data = get_url_data(api_url).json()
         error_code = json_data["status"]["error_code"]
-        if error_code == 0:
-            if coin_name is None:
-                return json_data["data"][0]["slug"]
-
-            return [
-                data["slug"]
-                for data in json_data["data"]
-                if data["name"].lower() == coin_name.lower()
-            ][0]
-        if error_code == 400:
+        if str(error_code) == "0":
+            coins = json_data["data"]["cryptoCurrencyList"]
+            matches = [
+                c
+                for c in coins
+                if c["symbol"].upper() == coin_code.upper()
+                and (coin_name is None or c["name"].lower() == coin_name.lower())
+            ]
+            if matches:
+                return matches[0]["id"]
             raise InvalidCoinCode(
                 "'{}' coin code is unavailable on coinmarketcap.com".format(coin_code)
             )
-        else:
-            raise Exception(json_data["status"]["error_message"])
+        if str(error_code) == "400":
+            raise InvalidCoinCode(
+                "'{}' coin code is unavailable on coinmarketcap.com".format(coin_code)
+            )
+        raise Exception(json_data["status"]["error_message"])
     except Exception as e:
         print("Error fetching coin id data for coin code {}".format(coin_code))
-
-        if hasattr(e, "message"):
-            print("Error message:", e.message)
-        else:
-            print("Error message:", e)
+        print("Error message:", e)
+        raise e
 
 
 def download_coin_data(
     coin_code, start_date, end_date, fiat, coin_name, id_number=None
 ):
     """
-    Download HTML price history for the specified cryptocurrency and time range from CoinMarketCap.
+    Download price history for the specified cryptocurrency and time range from CoinMarketCap.
 
     :param coin_code: coin code of a cryptocurrency e.g. btc
     :param start_date: date since when to scrape data (in the format of dd-mm-yyyy)
@@ -78,7 +93,7 @@ def download_coin_data(
     :param coin_name: coin name in case of many coins with same code e.g. sol -> solana, solcoin
     :param id_number: id number for the token on coinmarketcap. Will override coin_code and coin_name when provided.
 
-    :return: returns html of the webpage having historical data of cryptocurrency for certain duration
+    :return: json data with historical OHLCV data for the cryptocurrency
     """
 
     if start_date is None:
@@ -89,8 +104,8 @@ def download_coin_data(
         yesterday = datetime.date.today() - datetime.timedelta(1)
         end_date = yesterday.strftime("%d-%m-%Y")
 
-    if not id_number:
-        coin_id = get_coin_id(coin_code, coin_name)
+    coin_id = id_number if id_number else get_coin_id(coin_code, coin_name)
+    convert_id = _FIAT_IDS.get(fiat.upper(), 2781)
 
     # convert the dates to timestamp for the url
     start_date_timestamp = int(
@@ -108,31 +123,30 @@ def download_coin_data(
         .timestamp()
     )
 
-    if id_number:
-        api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/ohlcv/historical?convert={}&id={}&time_end={}&time_start={}".format(
-            fiat, id_number, end_date_timestamp, start_date_timestamp
-        )
-    else:
-        api_url = "https://web-api.coinmarketcap.com/v1/cryptocurrency/ohlcv/historical?convert={}&slug={}&time_end={}&time_start={}".format(
-            fiat, coin_id, end_date_timestamp, start_date_timestamp
-        )
+    api_url = (
+        "{}/cryptocurrency/historical" "?id={}&convertId={}&timeStart={}&timeEnd={}"
+    ).format(
+        _CMC_DATA_API, coin_id, convert_id, start_date_timestamp, end_date_timestamp
+    )
 
     try:
         json_data = get_url_data(api_url).json()
-        if json_data["status"]["error_code"] != 0:
-            raise Exception(json_data["status"]["error_message"])
+        status = json_data.get("status", {})
+        error_code = status.get("error_code")
+        if error_code and str(error_code) != "0":
+            raise Exception(status.get("error_message", "Unknown error"))
         if id_number:
             show_coin_info = False
-            if coin_code and coin_code != json_data["data"]["symbol"]:
+            if coin_code and coin_code.upper() != json_data["data"]["symbol"].upper():
                 print(
                     f"INFO: Using 'id_number'! The 'coin_code' ({coin_code}) provided "
                     + "is different from the symbol returned."
                 )
                 show_coin_info = True
-            if coin_name and coin_name != json_data["data"]["name"]:
+            if coin_name and coin_name.lower() != json_data["data"]["name"].lower():
                 print(
                     f"INFO: Using 'id_number'! The 'coin_name' ({coin_name}) provided "
-                    + "is different from the symbol returned."
+                    + "is different from the name returned."
                 )
                 show_coin_info = True
             if show_coin_info:
@@ -150,10 +164,8 @@ def download_coin_data(
             )
         )
 
-        if hasattr(e, "message"):
-            print("Error message (download_data) :", e.message)
-        else:
-            print("Error message (download_data) :", e)
+        print("Error message (download_data) :", e)
+        raise e
 
 
 def _replace(s, bad_chars):
