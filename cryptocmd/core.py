@@ -111,9 +111,9 @@ class CmcScraper(object):
         )
 
         for _row in coin_data["data"]["quotes"]:
-            _row_quote = list(_row["quote"].values())[0]
+            _row_quote = _row["quote"]
             date = datetime.strptime(
-                _row_quote["timestamp"], "%Y-%m-%dT%H:%M:%S.%fZ"
+                _row["timeOpen"], "%Y-%m-%dT%H:%M:%S.%fZ"
             ).strftime("%d-%m-%Y")
 
             row = [
@@ -123,16 +123,17 @@ class CmcScraper(object):
                 _row_quote["low"],
                 _row_quote["close"],
                 _row_quote["volume"],
-                _row_quote["market_cap"],
-                _row["time_open"],
-                _row["time_high"],
-                _row["time_low"],
-                _row["time_close"],
+                _row_quote["marketCap"],
+                _row["timeOpen"],
+                _row["timeHigh"],
+                _row["timeLow"],
+                _row["timeClose"],
             ]
 
             self.rows.insert(0, row)
 
-        self.end_date, self.start_date = self.rows[0][0], self.rows[-1][0]
+        if self.rows:
+            self.end_date, self.start_date = self.rows[0][0], self.rows[-1][0]
 
         if self.order_ascending:
             self.rows.sort(key=lambda x: datetime.strptime(x[0], "%d-%m-%Y"))
