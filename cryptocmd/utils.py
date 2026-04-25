@@ -3,6 +3,8 @@
 
 from __future__ import print_function
 
+import json
+import os
 import sys
 import datetime
 from requests import get
@@ -10,16 +12,10 @@ from requests import get
 
 _CMC_DATA_API = "https://api.coinmarketcap.com/data-api/v3"
 
-_FIAT_IDS = {
-    "USD": 2781,
-    "EUR": 2790,
-    "GBP": 2791,
-    "JPY": 2797,
-    "AUD": 2782,
-    "CAD": 2784,
-    "CHF": 2785,
-    "CNY": 2787,
-}
+with open(os.path.join(os.path.dirname(__file__), "fiat_ids.json")) as _f:
+    _FIAT_IDS = json.load(_f)
+
+_SUPPORTED_FIATS = ", ".join(sorted(_FIAT_IDS))
 
 _HEADERS = {"User-Agent": "Mozilla/5.0"}
 
@@ -105,7 +101,9 @@ def download_coin_data(
         end_date = yesterday.strftime("%d-%m-%Y")
 
     coin_id = id_number if id_number else get_coin_id(coin_code, coin_name)
-    convert_id = _FIAT_IDS.get(fiat.upper(), 2781)
+    convert_id = _FIAT_IDS.get(fiat.upper())
+    if convert_id is None:
+        raise ValueError(f"Unknown fiat '{fiat}'. Supported: {_SUPPORTED_FIATS}.")
 
     # convert the dates to timestamp for the url
     start_date_timestamp = int(
