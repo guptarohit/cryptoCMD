@@ -14,9 +14,6 @@ jobs:
       matrix:
         python-version:
           - '3.9'
-          - '3.10'
-          - '3.11'
-          - '3.12'
           - '3.13'
           - 3.x
         os:
@@ -26,7 +23,7 @@ jobs:
         arch:
           - x64
         include:
-          - python-version: 3.11
+          - python-version: '3.13'
             os: windows-latest
             arch: x86
     steps:
