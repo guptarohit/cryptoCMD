@@ -105,43 +105,55 @@ def download_coin_data(
     if convert_id is None:
         raise ValueError(f"Unknown fiat '{fiat}'. Supported: {_SUPPORTED_FIATS}.")
 
-    # convert the dates to timestamp for the url
-    start_date_timestamp = int(
-        (
-            datetime.datetime.strptime(start_date, "%d-%m-%Y")
-            - datetime.timedelta(days=1)
-        )
-        .replace(tzinfo=datetime.timezone.utc)
-        .timestamp()
+    start_dt = datetime.datetime.strptime(start_date, "%d-%m-%Y").replace(
+        tzinfo=datetime.timezone.utc
     )
-
-    end_date_timestamp = int(
-        datetime.datetime.strptime(end_date, "%d-%m-%Y")
-        .replace(tzinfo=datetime.timezone.utc)
-        .timestamp()
-    )
-
-    api_url = (
-        "{}/cryptocurrency/historical" "?id={}&convertId={}&timeStart={}&timeEnd={}"
-    ).format(
-        _CMC_DATA_API, coin_id, convert_id, start_date_timestamp, end_date_timestamp
+    end_dt = datetime.datetime.strptime(end_date, "%d-%m-%Y").replace(
+        tzinfo=datetime.timezone.utc
     )
 
     try:
-        json_data = get_url_data(api_url).json()
-        status = json_data.get("status", {})
-        error_code = status.get("error_code")
-        if error_code and str(error_code) != "0":
-            raise Exception(status.get("error_message", "Unknown error"))
+        # CMC caps responses at ~365 entries per request; split into yearly chunks
+        # so long/all-time ranges always return daily granularity.
+        # timeStart is exclusive (first returned day = timeStart + 1), so each
+        # chunk's timeStart equals the previous chunk's timeEnd — no overlap, no gap.
+        all_quotes = []
+        result_json = None
+        chunk_start = start_dt - datetime.timedelta(days=1)
+
+        while chunk_start < end_dt:
+            chunk_end = min(chunk_start + datetime.timedelta(days=365), end_dt)
+            api_url = (
+                "{}/cryptocurrency/historical"
+                "?id={}&convertId={}&timeStart={}&timeEnd={}"
+            ).format(
+                _CMC_DATA_API,
+                coin_id,
+                convert_id,
+                int(chunk_start.timestamp()),
+                int(chunk_end.timestamp()),
+            )
+            json_data = get_url_data(api_url).json()
+            status = json_data.get("status", {})
+            error_code = status.get("error_code")
+            if error_code and str(error_code) != "0":
+                raise Exception(status.get("error_message", "Unknown error"))
+            if result_json is None:
+                result_json = json_data
+            all_quotes.extend(json_data["data"]["quotes"])
+            chunk_start = chunk_end + datetime.timedelta(days=1)
+
+        result_json["data"]["quotes"] = all_quotes
+
         if id_number:
             show_coin_info = False
-            if coin_code and coin_code.upper() != json_data["data"]["symbol"].upper():
+            if coin_code and coin_code.upper() != result_json["data"]["symbol"].upper():
                 print(
                     f"INFO: Using 'id_number'! The 'coin_code' ({coin_code}) provided "
                     + "is different from the symbol returned."
                 )
                 show_coin_info = True
-            if coin_name and coin_name.lower() != json_data["data"]["name"].lower():
+            if coin_name and coin_name.lower() != result_json["data"]["name"].lower():
                 print(
                     f"INFO: Using 'id_number'! The 'coin_name' ({coin_name}) provided "
                     + "is different from the name returned."
@@ -149,10 +161,10 @@ def download_coin_data(
                 show_coin_info = True
             if show_coin_info:
                 print(
-                    f"""The returned data belongs to coin "{json_data['data']['name']}", """
-                    + f"""with symbol "{json_data['data']['symbol']}" """
+                    f"""The returned data belongs to coin "{result_json['data']['name']}", """
+                    + f"""with symbol "{result_json['data']['symbol']}" """
                 )
-        return json_data
+        return result_json
     except Exception as e:
         print(
             "Error fetching price data for {} for interval '{}' and '{}'".format(
@@ -161,7 +173,6 @@ def download_coin_data(
                 end_date,
             )
         )
-
         print("Error message (download_data) :", e)
         raise e
 
