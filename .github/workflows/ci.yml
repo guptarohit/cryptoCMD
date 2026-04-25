@@ -15,7 +15,6 @@ jobs:
         python-version:
           - '3.9'
           - '3.13'
-          - 3.x
         os:
           - ubuntu-latest
           - macOS-latest
