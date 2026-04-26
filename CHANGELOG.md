@@ -6,12 +6,12 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-* Restored data fetching by migrating to working CMC API endpoints
+* Restored data fetching by migrating to working CMC API endpoints ([#168](https://github.com/guptarohit/cryptoCMD/pull/168))
 
 ### Changed
 
-* Dropped Python 3.7 support; minimum is now Python 3.9. Added Python 3.13 support.
-* Migrated build tooling from poetry to uv + hatchling; removed `setup.py`
+* Dropped Python 3.7 support; minimum is now Python 3.9. Added Python 3.13 support. ([#71](https://github.com/guptarohit/cryptoCMD/pull/71))
+* Migrated build tooling from poetry to uv + hatchling; removed `setup.py` ([#169](https://github.com/guptarohit/cryptoCMD/pull/169), [#170](https://github.com/guptarohit/cryptoCMD/pull/170))
 
 ## [0.6.4] - 2023-10-14
 
