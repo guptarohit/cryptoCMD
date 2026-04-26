@@ -38,7 +38,9 @@ class CmcScraper(object):
         """
         :param coin_code: coin code of cryptocurrency e.g. btc. Will be ignored if using id_number.
         :param start_date: date since when to scrape data (in the format of dd-mm-yyyy)
-        :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
+        :param end_date: date to which scrape the data (in the format of dd-mm-yyyy).
+            Defaults to today. CMC only returns completed daily candles, so the latest
+            candle returned will always be the last completed UTC day.
         :param all_time: 'True' if need data of all time for respective cryptocurrency
         :param order_ascending: data ordered by 'Date' in ascending order (i.e. oldest first).
         :param fiat: fiat code eg. USD, EUR

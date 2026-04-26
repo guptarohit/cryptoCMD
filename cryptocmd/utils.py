@@ -84,7 +84,9 @@ def download_coin_data(
 
     :param coin_code: coin code of a cryptocurrency e.g. btc
     :param start_date: date since when to scrape data (in the format of dd-mm-yyyy)
-    :param end_date: date to which scrape the data (in the format of dd-mm-yyyy)
+    :param end_date: date to which scrape the data (in the format of dd-mm-yyyy).
+        Defaults to today. CMC only returns completed daily candles, so the latest
+        candle returned will always be the last completed UTC day regardless of this value.
     :param fiat: fiat code eg. USD, EUR
     :param coin_name: coin name in case of many coins with same code e.g. sol -> solana, solcoin
     :param id_number: id number for the token on coinmarketcap. Will override coin_code and coin_name when provided.
@@ -97,8 +99,7 @@ def download_coin_data(
         start_date = "28-4-2013"
 
     if end_date is None:
-        yesterday = datetime.date.today() - datetime.timedelta(1)
-        end_date = yesterday.strftime("%d-%m-%Y")
+        end_date = datetime.date.today().strftime("%d-%m-%Y")
 
     coin_id = id_number if id_number else get_coin_id(coin_code, coin_name)
     convert_id = _FIAT_IDS.get(fiat.upper())
