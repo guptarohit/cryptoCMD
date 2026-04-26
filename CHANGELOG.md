@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.6.5](https://github.com/guptarohit/cryptoCMD/compare/v0.6.4...v0.6.5) (2026-04-25)
+## [0.6.5](https://github.com/guptarohit/cryptoCMD/compare/v0.6.4...v0.6.5) (2026-04-26)
 
 ### Fixed
 
