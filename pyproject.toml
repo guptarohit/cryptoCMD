@@ -40,6 +40,7 @@ build-backend = "hatchling.build"
 dev = [
     "ruff>=0.3.5,<0.5.0",
     "pre-commit",
+    "pytest>=8.4.2",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -50,6 +51,11 @@ include = [
     "cryptocmd/",
     "LICENSE",
     "README.md",
+]
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: marks tests as integration tests that make live network calls",
 ]
 
 [tool.ruff]

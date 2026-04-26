@@ -37,7 +37,9 @@ jobs:
         run: uv run ruff check .
       - name: Run formatter
         run: uv run ruff format . --check
-      - name: Run test scripts
+      - name: Run tests
+        run: uv run pytest tests/ -v
+      - name: Run example scripts
         run: |
           uv run python examples/get_csv.py
           uv run python examples/get_by_coin_name.py
