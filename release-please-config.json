@@ -19,7 +19,9 @@
     ".": {
       "release-type": "python",
       "changelog-path": "CHANGELOG.md",
-      "version-file": "cryptocmd/__version__.py"
+      "extra-files": [
+        "cryptocmd/__version__.py"
+      ]
     }
   }
 }
