@@ -1,6 +1,6 @@
 [project]
 name = "cryptocmd"
-version = "0.6.5"
+version = "0.6.6"
 description = "Cryptocurrency historical market price data scrapper."
 authors = [{ name = "Rohit Gupta", email = "rohitgtech+git@gmail.com" }]
 license = { text = "BSD-3-Clause" }
