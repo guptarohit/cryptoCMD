@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.6](https://github.com/guptarohit/cryptoCMD/compare/v0.6.5...v0.6.6) (2026-04-26)
+
+
+### Fixed
+
+* use today as default end_date to include latest completed candle ([37344df](https://github.com/guptarohit/cryptoCMD/commit/37344dffe4111ebba0f0860a2812d6516a4aa939))
+
 ## [0.6.5](https://github.com/guptarohit/cryptoCMD/compare/v0.6.4...v0.6.5) (2026-04-26)
 
 ### Fixed
