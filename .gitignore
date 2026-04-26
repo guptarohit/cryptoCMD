@@ -105,3 +105,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# macOS
+.DS_Store
+
+# Generated CSV output from examples / tests
+*.csv
