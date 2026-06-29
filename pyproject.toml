@@ -28,6 +28,9 @@ dependencies = [
 [project.optional-dependencies]
 pandas = ["pandas"]
 
+[project.scripts]
+cryptocmd = "cryptocmd.cli:main"
+
 [project.urls]
 Homepage = "https://github.com/guptarohit/cryptoCMD"
 Repository = "https://github.com/guptarohit/cryptoCMD"
